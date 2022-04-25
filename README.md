@@ -1,1 +1,1 @@
-# homelab-as-code
+# homelab
