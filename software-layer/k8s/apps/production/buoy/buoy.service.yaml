@@ -4,7 +4,7 @@ metadata:
   name: buoy-service
   labels:
     app: buoy
-  namespace: staging
+  namespace: default
 spec:
   type: LoadBalancer
   # externalTrafficPolicy: Local
