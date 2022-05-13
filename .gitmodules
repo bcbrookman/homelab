@@ -1,6 +1,6 @@
 [submodule "platform-layer/ansible/k3s-ansible"]
 	path = platform-layer/ansible/k3s-ansible
-	url = https://github.com/k3s-io/k3s-ansible.git
+	url = https://github.com/bcbrookman/k3s-ansible.git
 	branch = k3s-ha
 [submodule "platform-layer/ansible/roles/duplicati"]
 	path = platform-layer/ansible/roles/duplicati
