@@ -8,5 +8,5 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./software-layer/k8s/infrastructure
+  path: ./software-layer/k8s/infrastructure/staging
   prune: true

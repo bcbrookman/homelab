@@ -1,0 +1,5 @@
+namespace: default
+resources:
+  - jenkins.deployment.yaml
+  - jenkins.pvc.yaml
+  - jenkins.service.yaml

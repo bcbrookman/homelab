@@ -1,0 +1,4 @@
+resources:
+  - ../../base/buoy/
+patchesStrategicMerge:
+  - buoy-patches.yaml
