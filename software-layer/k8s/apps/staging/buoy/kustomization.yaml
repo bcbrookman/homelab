@@ -2,3 +2,7 @@ resources:
   - ../../base/buoy/
 patchesStrategicMerge:
   - buoy-patches.yaml
+resources:
+  - ../../base/buoy/
+patchesStrategicMerge:
+  - buoy-patches.yaml
