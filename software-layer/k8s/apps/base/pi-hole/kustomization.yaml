@@ -1,0 +1,5 @@
+namespace: default
+resources:
+  - pi-hole.deployment.yaml
+  - pi-hole.service-tcp.yaml
+  - pi-hole.service-udp.yaml

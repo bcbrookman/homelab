@@ -1,0 +1,4 @@
+resources:
+  - ../../base/pi-hole/
+patchesStrategicMerge:
+  - pi-hole-patches.yaml
