@@ -1,0 +1,37 @@
+# unifi.deployment.yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unifi
+  labels:
+    app: unifi
+    env: prod
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: unifi
+      env: prod
+  template:
+    metadata:
+      labels:
+        app: unifi
+        env: prod
+    spec:
+      containers:
+      - env:
+        - name: TZ
+          value: "America/Los_Angeles"
+        image: jacobalberty/unifi:v7.1.66
+        name: unifi
+        ports:
+          - containerPort: 3478
+            protocol: UDP
+          - containerPort: 10001
+            protocol: UDP
+          - containerPort: 8080
+          - containerPort: 8443
+      restartPolicy: Always

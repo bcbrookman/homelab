@@ -1,0 +1,4 @@
+namespace: default
+resources:
+  - unifi.deployment.yaml
+  - unifi.service.yaml
