@@ -3,4 +3,3 @@ namespace: flux-system
 kind: Kustomization
 resources:
   - metallb.yaml
-  - jenkins.yaml
