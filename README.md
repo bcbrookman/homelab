@@ -1,10 +1,10 @@
 # Homelab
 
-This repository contains my homelab infrastructure, defined and deployed as code. 
+This repository contains my personal homelab, defined and deployed as code using [IaC](https://en.wikipedia.org/wiki/Infrastructure_as_code), and [GitOps](hhttps://www.weave.works/technologies/gitops/) practices where possible.
 
-## Overview
+## Goals
 
-In addition to being an infrastructure lab, it also functions as my home network. It supports much of what I do everyday, and is designed with the following goals in mind:
+In addition to being a learning environment, my homelab also functions as my home network. It supports much of what I do everyday, and is designed with the following goals in mind:
 
 - High service uptime
 - High fault tolerance
@@ -15,29 +15,14 @@ In addition to being an infrastructure lab, it also functions as my home network
 
 ## Layers
 
-My homelab is designed in layers which very loosely align with the concepts of SaaS, PaaS, and IaaS. Modularizing the infrastructure in this way helps me isolate dependencies, and avoid deployment problems.
+My homelab is broken up into layers which very loosely align with the concepts of [IaaS](https://en.wikipedia.org/wiki/Infrastructure_as_a_service), [PaaS](https://en.wikipedia.org/wiki/Platform_as_a_service), and [SaaS](https://en.wikipedia.org/wiki/Software_as_a_service). Modularizing the infrastructure in this way helps me isolate dependencies, and avoid deployment problems.
 
-### Infrastructure Layer
+![homelab layers](docs/assets/homelab-layers-all.svg)
 
-The infrastructure layer provides the low-level plumbing and compute resources used by the platform layer. It includes:
+- The [Software Layer](https://bcbrookman.github.io/homelab/software-layer/) provides the applications and services consumed by users and systems in my homelab.
+- The [Platform Layer](https://bcbrookman.github.io/homelab/platform-layer/) provides the environments and runtimes which applications and services are deployed on.
+- The [Infrastructure Layer](https://bcbrookman.github.io/homelab/infrastructure-layer/) provides the hypervisors, bare-metal operating systems, and compute resources used by the other layers.
 
-- Networking
-- Compute hardware
-- Bare-metal OS setup
-- Environmentals
-- Power management
+## Changelog
 
-### Platform Layer
-
-The platform layer provides the underlying infrastructure which software and services are deployed on within the software layer. It includes:
-
-- VM and LXC provisioning
-- OS configuration management
-- Kubernetes clusters
-
-### Software Layer
-
-The software layer provides applications and services to users and other systems in my homelab. It includes: 
-
-- Deployment manifests
-- Application setup configs
+See [commit history](https://github.com/bcbrookman/homelab/commits/main)

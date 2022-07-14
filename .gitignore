@@ -15,6 +15,9 @@ coverage.xml
 .pytest_cache/
 cover/
 
+# Mkdocs local files
+site/
+
 # Terraform local files
 *.tfstate*
 **/.terraform
