@@ -5,3 +5,6 @@
 [submodule "platform-layer/ansible/roles/duplicati"]
 	path = platform-layer/ansible/roles/duplicati
 	url = https://github.com/bcbrookman/ansible-role-duplicati.git
+[submodule "infrastructure-layer/homelab-desk"]
+	path = infrastructure-layer/homelab-desk
+	url = https://github.com/bcbrookman/homelab-desk
