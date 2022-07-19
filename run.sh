@@ -17,7 +17,7 @@ function setup {
         set -x
         ansible-galaxy install -r $PROJ_ROOT/platform-layer/ansible/requirements.yml
     fi
-    
+
     { set +x; } 2>/dev/null
     if [ -f "$PROJ_ROOT/software-layer/ansible/requirements.yml" ]; then
         set -x
@@ -27,10 +27,11 @@ function setup {
 
 function lint {
     set -x
-    yamllint $PROJ_ROOT
-    cd $PROJ_ROOT/infrastructure-layer/ansible && ansible-lint -v --offline
-    cd $PROJ_ROOT/platform-layer/ansible && ansible-lint -v --offline
-    cd $PROJ_ROOT/software-layer/ansible && ansible-lint -v --offline
+    cd $PROJ_ROOT && yamllint .
+    export ANSIBLE_ROLES_PATH=
+    cd $PROJ_ROOT/infrastructure-layer/ansible && ansible-lint -v
+    cd $PROJ_ROOT/platform-layer/ansible && ansible-lint -v
+    cd $PROJ_ROOT/software-layer/ansible && ansible-lint -v
 }
 
 function help {
@@ -39,7 +40,7 @@ function help {
     compgen -A function | grep -v ^_ | cat -n
 }
 
-# If -e is set as the first argument, exit the script 
+# If -e is set as the first argument, exit the script
 # when a failure occurs (necessary for CI/CD)
 if [ "$1" = "-e" ]; then
     set -e

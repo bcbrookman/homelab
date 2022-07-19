@@ -1,3 +1,4 @@
+---
 pm_api_url: https://pve01:8006/api2/json
 pm_api_token_id: ENC[AES256_GCM,data:UmWF7Tvxs6GFMIZEPH7Hl/TXJjEriemUanS9,iv:VsojgaRwQCJ3xQayLC/+ce4XPY9Hgshm+nKhQDCWRb8=,tag:inRaqAdK244pWxJoFQkXuA==,type:str]
 pm_api_token_secret: ENC[AES256_GCM,data:m75z55td1jqQlg8A8nuJKZfqznVOl2E3C5C2z06rtm8XEa5w,iv:98n7q2RtA3zCEByc82w2TT1kNuU8YITUGopJUF9nSvY=,tag:xQ9XsnipqhF7Ze10W+sShQ==,type:str]

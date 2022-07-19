@@ -1,0 +1,8 @@
+---
+offline: true
+exclude_paths:
+  - .cache/
+  - .github/
+  - ${HOME}/.cache
+  - ./platform-layer/ansible/k3s-ansible
+  - ./platform-layer/ansible/roles/duplicati

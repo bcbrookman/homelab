@@ -1,3 +1,4 @@
+---
 namespace: default
 resources:
   - pi-hole.deployment.yaml

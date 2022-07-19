@@ -22,9 +22,9 @@ spec:
         env: prod
     spec:
       containers:
-      - env:
-        - name: TZ
-          value: "America/Los_Angeles"
+        env:
+          - name: TZ
+            value: "America/Los_Angeles"
         image: jacobalberty/unifi:v7.1.66
         name: unifi
         ports:

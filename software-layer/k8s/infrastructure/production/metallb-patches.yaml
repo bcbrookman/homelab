@@ -8,7 +8,7 @@ spec:
   values:
     configInline:
       address-pools:
-      - name: default
-        protocol: layer2
-        addresses:
-        - 192.168.20.210-192.168.20.229
+        - name: default
+          protocol: layer2
+          addresses:
+            - 192.168.20.210-192.168.20.229

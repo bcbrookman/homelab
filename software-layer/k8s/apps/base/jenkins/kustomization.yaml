@@ -1,3 +1,4 @@
+---
 namespace: default
 resources:
   - jenkins.deployment.yaml
