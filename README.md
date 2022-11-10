@@ -1,6 +1,6 @@
 # Homelab
 
-This repository contains my personal homelab, defined and deployed as code using [IaC](https://en.wikipedia.org/wiki/Infrastructure_as_code), and [GitOps](hhttps://www.weave.works/technologies/gitops/) practices where possible.
+This repository contains my personal homelab, defined and deployed as code using [IaC](https://en.wikipedia.org/wiki/Infrastructure_as_code), and [GitOps](https://www.weave.works/technologies/gitops/) practices where possible.
 
 ## Goals
 
