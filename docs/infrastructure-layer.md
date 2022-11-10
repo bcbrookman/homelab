@@ -10,10 +10,9 @@ Compute resources are provided using the following hardware:
 
 |Qty.|Model|CPU|Memory|Storage|Usage|
 |----|-----|---|------|-------|-----|
-|2|Raspberry Pi 4 Model B+|ARM v8 Cortex-A72 4 Cores @ 1.5GHz|8GB LPDDR4|32GB SD Card|K3s|
-|2|Raspberry Pi 4 Model B+|ARM v8 Cortex-A72 4 Cores @ 1.5GHz|4GB LPDDR4|32GB SD Card|K3s|
-|2|Lenovo ThinkCentre M82|Intel i5-3470 4 Cores @ 3.2GHz|32GB DDR3|512GB HDD|Proxmox VE|
-|1|Lenovo ThinkCentre M910q|Intel i7-6700T 4 Cores, 8 Threads @ 2.8 GHz|16GB DDR4|512GB SSD|Proxmox VE|
+|5|Lenovo ThinkCentre M910q|Intel i7-7700T 4 Cores, 8 Threads|16GB DDR4|512GB SSD|Proxmox VE|
+|2|Raspberry Pi 4 Model B+|ARM v8 Cortex-A72 4 Cores|8GB LPDDR4|32GB SD Card|K3s|
+|2|Raspberry Pi 4 Model B+|ARM v8 Cortex-A72 4 Cores|4GB LPDDR4|32GB SD Card|K3s|
 
 ## Storage
 
