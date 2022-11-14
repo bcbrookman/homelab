@@ -1,5 +1,6 @@
+---
 site_name: Homelab
-site_url: 
+site_url:
 docs_dir: docs
 
 theme:
@@ -7,7 +8,7 @@ theme:
   palette:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
-      scheme: default 
+      scheme: default
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
