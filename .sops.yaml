@@ -1,0 +1,6 @@
+---
+creation_rules:
+  - path_regex: .*\.ya?ml|.*\.ini|.*\.json
+    encrypted_regex: (?i)user|pass|secret|key|token|^data$|^stringData$
+    age: >-
+      age1azf8jz2rq6upyktxe0ntqnlnpwlsmuspgqy3ak3rh609vqk2recqdfznyk
