@@ -1,0 +1,41 @@
+all:
+    hosts: null
+    children:
+        master:
+            hosts:
+                k3s-staging-vm[01:05]:
+                    ansible_user: ENC[AES256_GCM,data:mAOcSsc=,iv:5bWiPdekN2ifhid24EO7aH/BxB7UvjVodgQHXhllXkI=,tag:4jU+60gYojxpzOL+XiIIwA==,type:str]
+        node:
+            hosts: null
+        k3s_cluster:
+            children:
+                master: null
+                node: null
+            vars:
+                k3s_version: v1.23.4+k3s1
+                systemd_dir: /etc/systemd/system
+                k3s_token: ENC[AES256_GCM,data:wietdNpJRr7okpUhQimKXak63yNLgUVzlwfHgGPrMpv4dUmIs4ZiMFqAu4/mYuNoFvE=,iv:isM7JCuoNKN9zjAbZcIBlhUYJA0/yftB/Nr47ob8sgw=,tag:vAJZR7okQGbQfdtmrfrTOA==,type:str]
+                extra_server_args: --disable servicelb --tls-san 192.168.0.1
+                extra_agent_args: null
+                apiserver_endpoint: 192.168.0.1
+                apiserver_port: 7443
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1azf8jz2rq6upyktxe0ntqnlnpwlsmuspgqy3ak3rh609vqk2recqdfznyk
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBEcUpLQTNkeXQwRDl6MEQ3
+            cHJlVW1YakUvSHMxYTFPT09QeUluNkZrVjBnCjU5RTViT29zaE5VNnpxTkh4R2tW
+            L0ErQThHbjdJczBTZ0NvT3NXSGg1dFkKLS0tIEpIWXVvN1R3Y3NwcTBNNmo2YThW
+            YjBUUE9RK25EOWQxT3ZDSXM4R0M2RTQKKaoJnsDE/CGLkg89aVxWgolKYHEY39Vo
+            NfUTtZH4OmFadOA7aScrhsyW5sfxX4bLUPqB9AwZv15bboaNf3ohHA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-11-25T17:55:06Z"
+    mac: ENC[AES256_GCM,data:Il5RVzxL88kjNKGLKIs43C2PcwIaXG5UIj90crClNWV6JD/MYfiyfJEwpkB5Z3q7EFGU8y9R0TXl2me4+vuOxqTEWF+SOSd9ORYuCGpKloUZjpMj30/ayCrhSH+mvMZbKeRPfPtOvcpSaaDgC0tDZzeKPAz2F1qZquGTCOHYZ4A=,iv:CLRcvAidGvRpbcGNqdKejbYXo4v0YZH3MkqGwqflTnk=,tag:S76klc7eBawj0iBxOn+vLg==,type:str]
+    pgp: []
+    encrypted_regex: (?i)user|pass|secret|key|token|^data$|^stringData$
+    version: 3.7.3
