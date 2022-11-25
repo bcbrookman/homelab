@@ -29,9 +29,22 @@ function lint {
     set -x
     cd $PROJ_ROOT && yamllint .
     export ANSIBLE_ROLES_PATH=
-    cd $PROJ_ROOT/infrastructure-layer/ansible && ansible-lint -v
-    cd $PROJ_ROOT/platform-layer/ansible && ansible-lint -v
-    cd $PROJ_ROOT/software-layer/ansible && ansible-lint -v
+
+    { set +x; } 2>/dev/null
+    if [ -d "$PROJ_ROOT/infrastructure-layer/ansible/" ]; then
+        set -x
+        cd $PROJ_ROOT/infrastructure-layer/ansible && ansible-lint -v
+    fi
+    { set +x; } 2>/dev/null
+    if [ -d "$PROJ_ROOT/infrastructure-layer/ansible/" ]; then
+        set -x
+        cd $PROJ_ROOT/platform-layer/ansible && ansible-lint -v
+    fi
+    { set +x; } 2>/dev/null
+    if [ -d "$PROJ_ROOT/infrastructure-layer/ansible/" ]; then
+        set -x
+        cd $PROJ_ROOT/software-layer/ansible && ansible-lint -v
+    fi
 }
 
 function help {
