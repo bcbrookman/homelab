@@ -41,13 +41,13 @@ This satisfies the 3-2-1 rule since there are always 3 copies of the data: one o
 
 ## Power
 
-Power to all equipment is provided by the following two UPSes. 
+Power to all equipment is provided by the following two UPSes.
 
 |Qty.|Model|Volt-ampere|Watts|
 |----|-----|-----------|-----|
 |1|CyberPower CP1500PFCLCD|1500VA|1000W|
 |1|CyberPower OR700LCDRM1U|700VA|400W|
 
-To help prevent a single UPS failure from becoming a single point of failure, clustered and highly available components are always powered by different UPSes. However, since many clusters (including Proxmox VE and Kubernetes) require an odd number of nodes to maintain quorum, a single UPS failure might still be problematic depending on which UPS fails. Both UPSes are also plugged into the same electrical circuit so a breaker trip or other problem would cause power loss to both UPSes. 
+To help prevent a single UPS failure from becoming a single point of failure, clustered and highly available components are always powered by different UPSes. However, since many clusters (including Proxmox VE and Kubernetes) require an odd number of nodes to maintain quorum, a single UPS failure might still be problematic depending on which UPS fails. Both UPSes are also plugged into the same electrical circuit so a breaker trip or other problem would cause power loss to both UPSes.
 
 These problems are currently accepted as compromises for using small form-factor, low-power, consumer hardware which often don't have redundant power supplies or NICs.
