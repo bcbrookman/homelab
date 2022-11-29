@@ -4,5 +4,4 @@ kind: Kustomization
 resources:
   - ../base/sources/
   - ../base/metallb/
-patchesStrategicMerge:
-  - metallb-patches.yaml
+  - ./metallb-resources.yaml
