@@ -5,4 +5,4 @@ exclude_paths:
   - .github/
   - ${HOME}/.cache
   - ./platform-layer/ansible/k3s-ansible
-  - ./platform-layer/ansible/roles/duplicati
+  - ./infrastructure-layer/ansible/roles/duplicati

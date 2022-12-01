@@ -4,7 +4,7 @@ extends: default
 # Exclude sub-modules, and Flux added files
 ignore: |
   **/platform-layer/**/k3s-ansible/
-  **/platform-layer/**/duplicati/
+  **/infrastructure-layer/**/duplicati/
   **/flux-system/gotk-*
   **/venv/
 
