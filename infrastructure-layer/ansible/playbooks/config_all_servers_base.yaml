@@ -1,0 +1,33 @@
+# server_base.yaml
+---
+- name: Apply base server configurations
+  hosts: all_servers
+  become: true
+
+  handlers:
+    - name: Restart rsyslog
+      ansible.builtin.service:
+        name: rsyslog
+        state: restarted
+
+  roles:
+    - geerlingguy.firewall
+    - geerlingguy.ntp
+    - geerlingguy.security
+    - sbaerlocher.snmp
+    - roles/duplicati
+
+  tasks:
+    - name: Make sure QEMU Guest Agent is installed, if needed
+      ansible.builtin.apt:
+        update_cache: true
+        package: qemu-guest-agent
+        state: present
+      when: ansible_system_vendor == "QEMU"
+
+    - name: Make sure rsyslog is configured
+      ansible.builtin.lineinfile:
+        path: /etc/rsyslog.conf
+        line: '*.* @@{{ syslog_dest_host }}:{{ syslog_dest_port }}'
+        state: present
+      notify: Restart rsyslog

@@ -1,0 +1,22 @@
+syslog_dest_host: 192.168.20.101
+syslog_dest_port: 514
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1azf8jz2rq6upyktxe0ntqnlnpwlsmuspgqy3ak3rh609vqk2recqdfznyk
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB3d3pEOGo4d08zb1g3Mzc4
+            WmwrTXh6N2lLRG1CTUVKbFJGcW5YOGNuNWtZCjZDeUVPRUxJaTVsYkpUendHTW5I
+            OTl5Tkc5K2lPRFVDM20vdVZlaUFjLzAKLS0tIEZKQ3N0V2VaWUNrU1djY0Jzb0M2
+            QU1OS09vOFRhcjkwbkNxS1E0YmpMaG8KuCQBIsBdaw9RIGZpxuAEIwTwtvZAvKtv
+            5ko2ZPWKhkbNnFZFGO6yN0+LP4UZA1VNlff4nZCq5adtLyfUY+xBDQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-12-06T19:00:07Z"
+    mac: ENC[AES256_GCM,data:kwuJytwCBYEcjw/fHGsRL7OG6VjFHASHrUyHJM47LtTslbUbYh3mqFdGtEk8TAeKQ5PKRIN7K/jjbb5JQepsJmH9LivClXo0i3aFjvk/yi44lHR4TkP4CBnxAy7Twg6QUEDMYDlXXy7hc678uHiHzWJ7l8pIy1av2bdBXZMyPDs=,iv:QeRkVWiByNhHxH37OQfjf1NW70BYLpwv/qUQGoOhV5g=,tag:ZUQ8N9m9JR6cf+0/eUMahQ==,type:str]
+    pgp: []
+    encrypted_regex: (?i)user|pass|secret|key|token|^data$|^stringData$
+    version: 3.7.3

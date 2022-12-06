@@ -28,7 +28,7 @@ function setup {
 function lint {
     set -x
     cd $PROJ_ROOT && yamllint .
-    export ANSIBLE_ROLES_PATH=
+    export ANSIBLE_ROLES_PATH=${HOME}/.ansible/roles/
 
     { set +x; } 2>/dev/null
     if [ -d "$PROJ_ROOT/infrastructure-layer/ansible/" ]; then

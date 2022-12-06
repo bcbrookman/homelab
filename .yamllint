@@ -10,5 +10,6 @@ ignore: |
 
 rules:
   line-length:
+    max: 100
     allow-non-breakable-inline-mappings: true
     level: warning

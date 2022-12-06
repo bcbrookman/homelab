@@ -1,0 +1,36 @@
+---
+# Groups of hosts
+pfsense_firewalls:
+  hosts:
+    pfsense:
+    pfsense[01:02]:
+proxmox_servers:
+  hosts:
+    pve[01:05]:
+raspberry_pis:
+  hosts:
+    k3s-pi[01:04]:
+synology_nas:
+  hosts:
+    nas:
+unifi_aps:
+  hosts:
+    ubnt-ap[01:02]:
+unifi_switches:
+  hosts:
+    ubnt-sw[01:05]:
+
+# Groups of groups
+all_servers:
+  children:
+    proxmox_servers:
+    raspberry_pis:
+network_gear:
+  children:
+    pfsense_firewalls:
+    unifi_switches:
+    unifi_aps:
+unifi_gear:
+  children:
+    unifi_switches:
+    unifi_aps:

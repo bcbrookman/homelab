@@ -1,0 +1,11 @@
+---
+roles:
+  - name: geerlingguy.firewall
+  - name: geerlingguy.security
+  - name: geerlingguy.ntp
+  - name: notmycloud.pve_discord_dark
+  - name: sbaerlocher.snmp
+    version: 1.8.0
+
+collections:
+  - name: community.sops

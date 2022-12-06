@@ -3,6 +3,10 @@ offline: true
 exclude_paths:
   - .cache/
   - .github/
-  - ${HOME}/.cache
-  - ./platform-layer/ansible/k3s-ansible
-  - ./infrastructure-layer/ansible/roles/duplicati
+  - ${HOME}/.cache/
+  - ${HOME}/.ansible/roles/
+  - ./platform-layer/ansible/k3s-ansible/
+  - ./infrastructure-layer/ansible/roles/
+
+skip_list:
+  - yaml  # Skip errors reported by yamllint

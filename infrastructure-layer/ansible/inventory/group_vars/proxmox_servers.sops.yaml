@@ -1,0 +1,25 @@
+firewall_allowed_tcp_ports:
+    - "22"
+    - "8006"
+security_ssh_password_authentication: ENC[AES256_GCM,data:GZIf,iv:uVRAMWi1jLF6x9TmpkD6fT/MOdIAePxW4Qm3FLA2T2E=,tag:VseawUYO5KJ8dJCYZRWCvQ==,type:str]
+security_ssh_permit_root_login: "yes"
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1azf8jz2rq6upyktxe0ntqnlnpwlsmuspgqy3ak3rh609vqk2recqdfznyk
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBQRGhIdU1XTFp2WjlpaVRF
+            MTBEejVMSkFYVVpMVkJPRWhydHY3eEZleFQ4CjNHczdHTjE5VkFuWnVEaVNFS1lv
+            Mm9WL2FDYTZ3bXZIQmVzNDQyZWFSN28KLS0tIDlVeVQ5QkJQZjFhOUR2ajBBRXo5
+            dzF0M3JTVmg3ZXp5bDc5bmdwamtMMWsK7DFzWbto01s99M/EajKRE6rjO1JdwSAm
+            09TtcVXTNvQ/Jn7q5kzoFrxefpDD6oJpaShnT1PnF2E4xEtft2RXEw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-12-06T17:43:23Z"
+    mac: ENC[AES256_GCM,data:mdOawqSS2YotJxdLK53iiczy73TW5tnxmFKeht4d92t6RYxwpRHR5pDd/olNL1Qgu43BaPX2vJkSP8rQYMNaN7kTISUiyepOLkxOG/Ixa9CVGvQ5uZeqnKwa6224w8hJQV4ay35iyvM8b39cPh/7hGOJrdM2hZ21xtj8hwfESyk=,iv:g2/tKufgK7yYCg+kd8m7qokkz+3EEZhtDdiVdOlbANs=,tag:hOLu5yL8wuQ2q2cVmwlvCQ==,type:str]
+    pgp: []
+    encrypted_regex: (?i)user|pass|secret|key|token|^data$|^stringData$
+    version: 3.7.3
