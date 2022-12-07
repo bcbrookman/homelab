@@ -2,7 +2,7 @@
 
 This layer provides the hypervisors, bare-metal operating systems, and compute resources used by the platform layer.
 
-![layers](assets/homelab-layers-if.svg)
+![infrastructure layer diagram](assets/homelab-layers-if.svg)
 
 ## Compute
 
@@ -32,12 +32,49 @@ This satisfies the 3-2-1 rule since there are always 3 copies of the data: one o
 
 ## Networking
 
+Logically, the network is divided into VLANs by usage.
+
+- The DMZ VLAN
+- The Inside VLAN
+- The Services VLAN
+- The IoT VLAN
+- The Guest VLAN
+
+![logical network topology diagram](assets/homelab-logical-network-topology.svg)
+
+As illustrated in the logical topology diagram above, traffic to and from each VLAN is polcied by firewalls. In general, the firewall rules restrict access according to the following table.
+
+|Source|Allowed Destinations|
+|------|--------------------|
+|Inside|Internet, DMZ, Services*, IoT*|
+|Services|Internet, DMZ, IoT*|
+|IoT|Internet, DMZ, Services*|
+|Guest|Internet, DMZ|
+|DMZ|Internet, Services*|
+
+*As needed, for specific hosts/services only
+
+Physically, the network topology is fairly small using only a handful of desktop switches, access points, and an internet firewall.
+
 |Qty.|Model|CPU|Memory|Storage|Usage|
-|------|-------|-----|--------|---------|-------|
+|----|-----|---|------|-------|-----|
 |1|Netgate SG-3100|ARM v7 Cortex-A9 2 Cores @ 1.6GHz|2GB DDR4L|32 GB M.2 SATA SSD|Firewall/Router|
 |1|UniFi FlexHD|---|---|---|Wi-Fi|
+|1|UniFi AP U6 Extender|---|---|---|Wi-Fi|
 |3|UniFi USW-8|---|---|---|Switching|
 |2|UniFi USW Flex|---|---|---|Switching (RPis)|
+
+The network is designed with redundant network paths wherever possible, but much of the service redundancy is handled at the application level.
+
+![physical network topology diagram](assets/homelab-physical-network-topology.svg)
+
+Notably missing from the physical topology diagram above are the DMZ firewalls. These firewalls are virtualized and run on separate Proxmox VE nodes in a high-availability configuration.
+
+## WLAN
+
+The WLAN is a straightforward deployment with 2 SSIDs. One SSID uses WPA2-EAP authentication with PEAP-MSCHAPv2 (for now), while the other uses standard WPA2-PSK authentication to support IoT and guest devices.
+
+For both SSIDs, VLANs are dynamically assigned to clients using FreeRADIUS (currently on pfSense) based on either the authenticating user account, or by client MAC address if PSK authentication was used. In the case of PSK authentication, if the client MAC address is unknown, they are placed in the Guest VLAN as a default.
 
 ## Power
 
