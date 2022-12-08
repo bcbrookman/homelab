@@ -1,0 +1,25 @@
+---
+# Groups of hosts
+k3s_vms:
+  hosts:
+    k3s-prod-vm[01:05]:
+k3s_rpis:
+  hosts:
+    k3s-pi01:
+    k3s-pi03:
+
+# Groups of groups
+all_servers:
+  children:
+    k3s_vms:
+    k3s_rpis:
+master:
+  children:
+    k3s_vms:
+node:
+  children:
+    k3s_rpis:
+k3s_cluster:
+  children:
+    master:
+    node:

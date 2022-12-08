@@ -1,0 +1,27 @@
+systemd_dir: /etc/systemd/system
+k3s_version: v1.23.4+k3s1
+k3s_token: ENC[AES256_GCM,data:cI3dBMk0iWl0863CwgoJ15zEhGH3/HtqSQLwB7A79vBeXtMR69F5ikwMx72+lnN6Izo=,iv:13bfCt/CjnWOSi44aEPZiLj5aLFV19R5EZsLHellwLg=,tag:FSTqZUYyrlF64ZT9E8JLeg==,type:str]
+extra_server_args: --disable servicelb --tls-san 192.168.0.1
+extra_agent_args: null
+apiserver_endpoint: 192.168.0.1
+apiserver_port: 6443
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1azf8jz2rq6upyktxe0ntqnlnpwlsmuspgqy3ak3rh609vqk2recqdfznyk
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBvYTlaZEM3TEp0SW5CdnBU
+            dit0dEVKMVVPT2Z0bEkrQkR1MkNYejNNbXlnCmVyc1ZsSGtSV1o2d25tdUNWWnVk
+            THZKY1U4UEMzaWl0TjhCS0p5SFNiZU0KLS0tIHJjdE5FNHlkY1IwMWV2V2poZkkv
+            M3dqVndDenFoYU44T091cTEyRkdYSHcKQPE3XKJl03XHZjn9vRkqndw8+2KueU0P
+            WDOie3quUBWeA1HpE/Q/68gRGqPHun26EeIObphZyPK8Ipuc/jAwxg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-12-08T16:12:17Z"
+    mac: ENC[AES256_GCM,data:wrSjF2QzM/JzJYQrT89R6gWdpkfRtgZUaWUcwxwmvrUCjdtHaZGwEBw0PuI6G9RK0dIaYLa8NaLCEcX+sAcfP9PZZYN7xLxJmYsCU5ZvKXceUq05rBZO1sWKdq5zKJZr6JJkgWxFT7+L3Q3A+a0cy6VhB6m0NO+SUBYcen5qNNI=,iv:qsE68lP3drOcDSk8/W+EoNJw84xZFaJMLYnQtbknm4o=,tag:KsJocvj2Yjm68/OVnCO9eQ==,type:str]
+    pgp: []
+    encrypted_regex: (?i)user|pass|secret|key|token|^data$|^stringData$
+    version: 3.7.3
