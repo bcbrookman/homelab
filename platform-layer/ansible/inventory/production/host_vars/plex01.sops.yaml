@@ -1,0 +1,26 @@
+firewall_allowed_tcp_ports:
+    - "22"
+    - "80"
+    - "443"
+    - "8200"
+    - "32400"
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1azf8jz2rq6upyktxe0ntqnlnpwlsmuspgqy3ak3rh609vqk2recqdfznyk
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAwbVhVL2lHZzFydHIvc2t3
+            OWZFNGdXSVcwNnJ5bU1paWVRTm5aaE5OUUJvCi82T2xObTZSWnRlbWptY2Zmcklt
+            NTRoTkRDanFVR0c2NVVRNXNUMkExbk0KLS0tIGQ0ajFIb1RMR1hnbkxlcGduMEZL
+            QTVsaXl5RGdEbVlrOHo2VWlyR004eWcK4rw0Newv/G6mwpgULPy0K4+PoKnpDwAU
+            SUsjma+Dhw0dw3wybDcaP5hmdyT1tR1tU8uZ5y5N0U1NGxUOW7jusw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2022-12-08T21:26:47Z"
+    mac: ENC[AES256_GCM,data:p0BnTrlzN+j5dP/tEucqMgrutvT+TZTi0B1Bxz28AkFkLvRHvX6aYEpypszHavw/l0tjKekPp+n2aj9/zr9yN9exhM5JHxEWK0D2NYR8jhITET/hU9X2kdm6h9BSTzamY0Oh3zPL+Ql+8VcAKDxRPduHh60qr9yEYUkO32Jh1Pk=,iv:iXx4hOSXlz2F1hfMCOQTYHjSg1knD9t4Zc/jLCIrf7Y=,tag:dKzUt48isYfMPGRl08T/Wg==,type:str]
+    pgp: []
+    encrypted_regex: (?i)user|pass|secret|key|token|^data$|^stringData$
+    version: 3.7.3

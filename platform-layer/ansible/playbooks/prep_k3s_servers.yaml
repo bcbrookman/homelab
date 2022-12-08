@@ -1,0 +1,55 @@
+---
+- name: Prepare servers for K3s
+  hosts: k3s_cluster
+  become: true
+
+  tasks:
+    - name: Install curl
+      ansible.builtin.apt:
+        update_cache: true
+        package: curl
+        state: present
+
+    - name: Set alternative for iptables as iptables-legacy
+      community.general.alternatives:
+        name: iptables
+        path: /usr/sbin/iptables-legacy
+
+    - name: Set alternative for ip6tables as ip6tables-legacy
+      community.general.alternatives:
+        name: ip6tables
+        path: /usr/sbin/ip6tables-legacy
+
+    - name: Check if swap is active on Debian nodes
+      ansible.builtin.shell: set -o pipefail && cat /proc/swaps | grep -e Filename
+      args:
+        executable: /bin/bash
+      register: swapcheck
+      changed_when: false
+      when: ansible_distribution == "Debian"
+
+    - name: If active, turn off swap on Debian nodes
+      ansible.builtin.command: swapoff --all
+      when: '"dev" in swapcheck.stdout'
+
+    - name: Disable swap mounts in fstab on Debian nodes
+      ansible.builtin.replace:
+        path: /etc/fstab
+        regexp: '^([^#].*\sswap\s+sw\s+.*)$'
+        replace: '# \1'
+      when: ansible_distribution == "Debian"
+
+    - name: Turn off swap on Raspbian nodes
+      ansible.builtin.command: dphys-swapfile swapoff
+      when: ansible_distribution == "Raspbian"
+
+    - name: Remove the swapfile on Raspbian nodes
+      ansible.builtin.command: dphys-swapfile uninstall
+      when: ansible_distribution == "Raspbian"
+
+    - name: Disable the dphys-swapfile service on Raspbian nodes
+      ansible.builtin.service:
+        name: dphys-swapfile.service
+        state: stopped
+        enabled: false
+      when: ansible_distribution == "Raspbian"

@@ -7,12 +7,17 @@ k3s_rpis:
   hosts:
     k3s-pi01:
     k3s-pi03:
+other_servers:
+  hosts:
+    plex01:
+    docker01:
 
 # Groups of groups
 all_servers:
   children:
     k3s_vms:
     k3s_rpis:
+    other_servers:
 master:
   children:
     k3s_vms:

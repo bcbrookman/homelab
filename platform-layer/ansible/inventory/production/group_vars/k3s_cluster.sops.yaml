@@ -1,3 +1,5 @@
+firewall_state: stopped
+firewall_enabled_at_boot: false
 systemd_dir: /etc/systemd/system
 k3s_version: v1.23.4+k3s1
 k3s_token: ENC[AES256_GCM,data:cI3dBMk0iWl0863CwgoJ15zEhGH3/HtqSQLwB7A79vBeXtMR69F5ikwMx72+lnN6Izo=,iv:13bfCt/CjnWOSi44aEPZiLj5aLFV19R5EZsLHellwLg=,tag:FSTqZUYyrlF64ZT9E8JLeg==,type:str]
@@ -20,8 +22,8 @@ sops:
             M3dqVndDenFoYU44T091cTEyRkdYSHcKQPE3XKJl03XHZjn9vRkqndw8+2KueU0P
             WDOie3quUBWeA1HpE/Q/68gRGqPHun26EeIObphZyPK8Ipuc/jAwxg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-12-08T16:12:17Z"
-    mac: ENC[AES256_GCM,data:wrSjF2QzM/JzJYQrT89R6gWdpkfRtgZUaWUcwxwmvrUCjdtHaZGwEBw0PuI6G9RK0dIaYLa8NaLCEcX+sAcfP9PZZYN7xLxJmYsCU5ZvKXceUq05rBZO1sWKdq5zKJZr6JJkgWxFT7+L3Q3A+a0cy6VhB6m0NO+SUBYcen5qNNI=,iv:qsE68lP3drOcDSk8/W+EoNJw84xZFaJMLYnQtbknm4o=,tag:KsJocvj2Yjm68/OVnCO9eQ==,type:str]
+    lastmodified: "2022-12-08T19:58:17Z"
+    mac: ENC[AES256_GCM,data:38SRip+w3dLV4iCr/p4z4+YMJPNFr3Pvh710rocYbtayvMhBuKiaBXlbpVpxAunIsaOn10r/AMWVs1tPiyspA46TGtaB+IihO73vjcd0KJheLUFSRK/ig1RegZEycEVk7WF/40rYiZMnlUPHb6VYhMSu1PAY4b+arUW99Pzbuf4=,iv:RwMPfV84CRl+MNBZl9LHIpc3mekXmv6RPe/Gxj4Oo+I=,tag:Vf6jIGZapQYp5gQrqKe+0g==,type:str]
     pgp: []
     encrypted_regex: (?i)user|pass|secret|key|token|^data$|^stringData$
     version: 3.7.3
