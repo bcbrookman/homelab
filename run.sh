@@ -5,30 +5,16 @@ PROJ_ROOT=$(dirname -- "$(readlink -f "${BASH_SOURCE}")")
 function setup {
     set -x
     pip3 install yamllint ansible ansible-lint --no-input
-
-    { set +x; } 2>/dev/null
-    if [ -f "$PROJ_ROOT/infrastructure-layer/ansible/requirements.yml" ]; then
-        set -x
-        ansible-galaxy install -r $PROJ_ROOT/infrastructure-layer/ansible/requirements.yml
-    fi
-
-    { set +x; } 2>/dev/null
-    if [ -f "$PROJ_ROOT/platform-layer/ansible/requirements.yml" ]; then
-        set -x
-        ansible-galaxy install -r $PROJ_ROOT/platform-layer/ansible/requirements.yml
-    fi
-
-    { set +x; } 2>/dev/null
-    if [ -f "$PROJ_ROOT/software-layer/ansible/requirements.yml" ]; then
-        set -x
-        ansible-galaxy install -r $PROJ_ROOT/software-layer/ansible/requirements.yml
-    fi
+    export ANSIBLE_ROLES_PATH=${HOME}/.ansible/roles/
+    export ANSIBLE_COLLECTIONS_PATH=${HOME}/.ansible/collections/
+    ansible-galaxy install -r requirements.yaml
 }
 
 function lint {
     set -x
     cd $PROJ_ROOT && yamllint .
     export ANSIBLE_ROLES_PATH=${HOME}/.ansible/roles/
+    export ANSIBLE_COLLECTIONS_PATH=${HOME}/.ansible/collections/
 
     { set +x; } 2>/dev/null
     if [ -d "$PROJ_ROOT/infrastructure-layer/ansible/" ]; then
@@ -36,12 +22,12 @@ function lint {
         cd $PROJ_ROOT/infrastructure-layer/ansible && ansible-lint -v
     fi
     { set +x; } 2>/dev/null
-    if [ -d "$PROJ_ROOT/infrastructure-layer/ansible/" ]; then
+    if [ -d "$PROJ_ROOT/platform-layer/ansible/" ]; then
         set -x
         cd $PROJ_ROOT/platform-layer/ansible && ansible-lint -v
     fi
     { set +x; } 2>/dev/null
-    if [ -d "$PROJ_ROOT/infrastructure-layer/ansible/" ]; then
+    if [ -d "$PROJ_ROOT/software-layer/ansible/" ]; then
         set -x
         cd $PROJ_ROOT/software-layer/ansible && ansible-lint -v
     fi
