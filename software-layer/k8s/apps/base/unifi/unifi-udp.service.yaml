@@ -1,0 +1,29 @@
+# unifi.service.yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: unifi-udp
+  annotations:
+    metallb.universe.tf/allow-shared-ip: unifi
+spec:
+  type: LoadBalancer
+  ports:
+    - name: stun-service
+      protocol: UDP
+      port: 3478
+      targetPort: 3478
+    - name: device-discovery
+      protocol: UDP
+      port: 10001
+      targetPort: 10001
+    - name: device-l2-discovery
+      protocol: UDP
+      port: 1900
+      targetPort: 1900
+    - name: remote-syslog
+      protocol: UDP
+      port: 5514
+      targetPort: 5514
+  selector:
+    app: unifi
