@@ -6,14 +6,14 @@ resource "proxmox_vm_qemu" "k3s-production" {
   clone = "debian-10-genericcloud-amd64-20211011-792-pve0${count.index % 5 + 1}"
   agent = 1
   os_type = "cloud-init"
-  cores = 2
+  cores = 4
   sockets = 1
   cpu = "host"
-  memory = 4096
+  memory = 10240
   scsihw = "virtio-scsi-pci"
   onboot = true
   disk {
-    size = "10G"
+    size = "50G"
     type = "scsi"
     storage = "local"
     iothread = 1
@@ -45,14 +45,14 @@ resource "proxmox_vm_qemu" "k3s-staging" {
   clone = "debian-10-genericcloud-amd64-20211011-792-pve0${count.index % 5 + 1}"
   agent = 1
   os_type = "cloud-init"
-  cores = 2
+  cores = 4
   sockets = 1
   cpu = "host"
-  memory = 4096
+  memory = 10240
   scsihw = "virtio-scsi-pci"
   onboot = true
   disk {
-    size = "10G"
+    size = "50G"
     type = "scsi"
     storage = "local"
     iothread = 1
