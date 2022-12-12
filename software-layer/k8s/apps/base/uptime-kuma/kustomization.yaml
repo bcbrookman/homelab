@@ -1,0 +1,6 @@
+---
+namespace: default
+resources:
+  - uptime-kuma.deployment.yaml
+  - uptime-kuma.service.yaml
+  - uptime-kuma.pvc.yaml

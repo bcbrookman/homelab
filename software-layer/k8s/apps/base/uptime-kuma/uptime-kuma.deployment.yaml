@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: uptime-kuma
+  name: uptime-kuma
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uptime-kuma
+  template:
+    metadata:
+      labels:
+        app: uptime-kuma
+    spec:
+      restartPolicy: Always
+      containers:
+        - image: louislam/uptime-kuma:latest
+          name: uptime-kuma
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "50m"
+          env:
+            - name: "PUID"
+              value: "1000"
+            - name: "PGID"
+              value: "1000"
+          ports:
+            - containerPort: 80
+            - containerPort: 443
+          volumeMounts:
+            - name: uptime-kuma-data
+              mountPath: ./data/
+      volumes:
+        - name: uptime-kuma-data
+          persistentVolumeClaim:
+            claimName: uptime-kuma-data
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
