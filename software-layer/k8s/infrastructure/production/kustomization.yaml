@@ -4,4 +4,7 @@ kind: Kustomization
 resources:
   - ../base/sources/
   - ../base/metallb/
+  - ../base/longhorn/
   - ./metallb-resources.yaml
+patchesStrategicMerge:
+  - ./longhorn-patches.yaml
