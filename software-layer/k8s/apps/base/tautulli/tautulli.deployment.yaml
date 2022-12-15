@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: tautulli
+  name: tautulli
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tautulli
+  template:
+    metadata:
+      labels:
+        app: tautulli
+    spec:
+      restartPolicy: Always
+      containers:
+        - image: lscr.io/linuxserver/tautulli:latest
+          name: tautulli
+          resources:
+            requests:
+              cpu: 100m
+            limits:
+              memory: 200Mi
+          env:
+            - name: "PUID"
+              value: "1000"
+            - name: "PGID"
+              value: "1000"
+            - name: "TZ"
+              value: "UTC"
+          ports:
+            - containerPort: 8181
+          volumeMounts:
+            - name: tautulli-config
+              mountPath: /config
+      volumes:
+        - name: tautulli-config
+          persistentVolumeClaim:
+            claimName: tautulli-config
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"

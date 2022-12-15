@@ -1,0 +1,6 @@
+---
+namespace: default
+resources:
+  - tautulli.deployment.yaml
+  - tautulli.service.yaml
+  - tautulli.pvc.yaml

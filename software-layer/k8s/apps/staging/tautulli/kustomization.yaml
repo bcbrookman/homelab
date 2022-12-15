@@ -1,0 +1,5 @@
+---
+resources:
+  - ../../base/tautulli/
+patchesStrategicMerge:
+  - tautulli-patches.yaml
