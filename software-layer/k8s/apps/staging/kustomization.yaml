@@ -3,4 +3,4 @@ resources:
   - buoy/
   - jenkins/
   - pi-hole/
-  - unifi/
+  - uptime-kuma/
