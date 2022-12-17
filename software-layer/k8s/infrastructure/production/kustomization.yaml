@@ -5,6 +5,7 @@ resources:
   - ../base/sources/
   - ../base/metallb/
   - ../base/longhorn/
+  - ./node-labels.yaml
   - ./metallb-resources.yaml
 patchesStrategicMerge:
   - ./longhorn-patches.yaml
