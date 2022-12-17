@@ -37,20 +37,6 @@ metadata:
 apiVersion: v1
 kind: Node
 metadata:
-  name: k3s-staging-vm05
-  labels:
-    topology.kubernetes.io/zone: ups01
----
-apiVersion: v1
-kind: Node
-metadata:
-  name: k3s-staging-vm05
-  labels:
-    topology.kubernetes.io/zone: ups01
----
-apiVersion: v1
-kind: Node
-metadata:
   name: k3s-pi02
   labels:
     topology.kubernetes.io/zone: ups01
