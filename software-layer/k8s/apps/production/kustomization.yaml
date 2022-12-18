@@ -4,4 +4,5 @@ resources:
   - jenkins/
   - pi-hole/
   - tautulli/
+  - unifi/
   - uptime-kuma/
