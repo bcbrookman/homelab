@@ -3,5 +3,8 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: longhorn-system
-  labels:
-    app: longhorn
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: metallb-system
