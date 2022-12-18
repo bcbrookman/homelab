@@ -5,7 +5,6 @@ metadata:
   name: tautulli
   labels:
     app: tautulli
-  namespace: default
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local

@@ -1,4 +1,5 @@
 ---
+namespace: default
 resources:
   - ../../base/tautulli/
 patchesStrategicMerge:

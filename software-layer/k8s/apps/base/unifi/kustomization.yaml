@@ -1,4 +1,5 @@
 ---
+namespace: default
 resources:
   - ./unifi.deployment.yaml
   - ./unifi.pvc.yaml

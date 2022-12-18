@@ -5,7 +5,6 @@ metadata:
   name: uptime-kuma
   labels:
     app: uptime-kuma
-  namespace: default
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local

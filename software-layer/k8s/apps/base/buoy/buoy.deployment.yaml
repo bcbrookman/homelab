@@ -5,7 +5,6 @@ metadata:
   labels:
     app: buoy
   name: buoy
-  namespace: default
 spec:
   replicas: 5
   selector:

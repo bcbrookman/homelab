@@ -5,7 +5,6 @@ metadata:
   name: pihole-tcp
   labels:
     app: pihole
-  namespace: staging
   annotations:
     metallb.universe.tf/allow-shared-ip: pihole
   creationTimestamp: null

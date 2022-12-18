@@ -5,7 +5,6 @@ metadata:
   labels:
     app: pihole
   name: pihole
-  namespace: staging
 spec:
   replicas: 2
   selector:
