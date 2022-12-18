@@ -23,3 +23,23 @@ spec:
       targetPort: 443
   selector:
     app: pihole
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pihole-udp
+  labels:
+    app: pihole
+  annotations:
+    metallb.universe.tf/allow-shared-ip: pihole
+  creationTimestamp: null
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  ports:
+    - name: dns
+      port: 53
+      protocol: UDP
+      targetPort: 53
+  selector:
+    app: pihole

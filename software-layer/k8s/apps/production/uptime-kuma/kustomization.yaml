@@ -5,4 +5,4 @@ namespace: default
 resources:
   - ../../base/uptime-kuma/
 patchesStrategicMerge:
-  - uptime-kuma-patches.yaml
+  - ./patches.yaml

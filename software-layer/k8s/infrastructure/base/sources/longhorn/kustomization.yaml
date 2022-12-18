@@ -1,7 +1,6 @@
 ---
 apiVersion: kustomize.config.k8s.io/v1beta1
+namespace: flux-system
 kind: Kustomization
-namespace: longhorn-system
 resources:
-  - ./services.yaml
-  - ./helmreleases.yaml
+  - ./helmrepositories.yaml
