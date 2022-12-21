@@ -14,8 +14,11 @@ jobs:
       - name: Checkout the repo at current context
         uses: actions/checkout@v3
 
+      - name: Install Task
+        uses: arduino/setup-task@v1
+
       - name: Setup the environment
-        run: ./run.sh -e setup
+        run: task setup
 
       - name: Run linters
-        run: ./run.sh -e lint
+        run: task lint

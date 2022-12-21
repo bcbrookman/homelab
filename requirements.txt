@@ -1,3 +1,6 @@
+ansible
+ansible-lint
 mkdocs
 mkdocs-material
 pymdown-extensions
+yamllint

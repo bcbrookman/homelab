@@ -1,0 +1,27 @@
+# https://taskfile.dev
+
+version: '3'
+
+env:
+  ANSIBLE_ROLES_PATH: ~/.ansible/roles/
+  ANSIBLE_COLLECTIONS_PATH: ~/.ansible/collections/
+
+tasks:
+  default:
+    cmds: [ task --list ]
+    silent: true
+
+  setup:
+    desc: Installs all dependencies
+    cmds:
+      - pip3 install --no-input --upgrade pip wheel
+      - pip3 install --no-input --upgrade --requirement requirements.txt
+      - ansible-galaxy install -r requirements.yaml --force
+
+  lint:
+    desc: Runs all linters
+    cmds:
+      - yamllint .
+      - cd infrastructure-layer/ansible && ansible-lint -v
+      - cd platform-layer/ansible && ansible-lint -v
+      - cd software-layer/ansible && ansible-lint -v
