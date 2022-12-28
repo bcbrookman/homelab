@@ -1,0 +1,28 @@
+---
+name: Platform Layer CI
+
+on:  # yamllint disable-line rule:truthy
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/platform-layer*"
+      - "platform-layer/**"
+      - "Taskfile.yaml"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo at current context
+        uses: actions/checkout@v3
+
+      - name: Install Task
+        uses: arduino/setup-task@v1
+
+      - name: Setup the environment
+        run: task platform-layer:setup
+
+      - name: Run linters
+        run: task platform-layer:lint

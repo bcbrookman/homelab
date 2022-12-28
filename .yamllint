@@ -1,11 +1,12 @@
 ---
 extends: default
 
-# Exclude sub-modules, and Flux added files
 ignore: |
-  **/platform-layer/**/k3s-ansible/
-  **/infrastructure-layer/**/duplicati/
+  **/*.sops.y*ml
+  **/duplicati/
   **/flux-system/gotk-*
+  **/homelab-desk/
+  **/k3s-ansible/
   **/venv/
 
 rules:
