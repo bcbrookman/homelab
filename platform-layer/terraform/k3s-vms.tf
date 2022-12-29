@@ -15,8 +15,7 @@ resource "proxmox_vm_qemu" "k3s-production" {
   disk {
     size = "50G"
     type = "scsi"
-    storage = "local"
-    iothread = 1
+    storage = "local-lvm"
   }
   network {
     model = "virtio"
@@ -54,8 +53,7 @@ resource "proxmox_vm_qemu" "k3s-staging" {
   disk {
     size = "50G"
     type = "scsi"
-    storage = "local"
-    iothread = 1
+    storage = "local-lvm"
   }
   network {
     model = "virtio"
@@ -68,7 +66,7 @@ resource "proxmox_vm_qemu" "k3s-staging" {
     type = "socket"
   }
   lifecycle {
-    # prevent_destroy = true
+    prevent_destroy = true
     ignore_changes = [
       network,
     ]

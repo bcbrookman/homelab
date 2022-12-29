@@ -11,14 +11,8 @@ resource "proxmox_vm_qemu" "pfsense" {
   onboot = true
   boot = "order=ide0;net0"
   qemu_os = "other"
-  disk {
-    size = "10G"
-    type = "scsi"
-    storage = "local"
-    iothread = 1
-  }
   lifecycle {
-    # prevent_destroy = true
+    prevent_destroy = true
     ignore_changes = [
       network,
     ]

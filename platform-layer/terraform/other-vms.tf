@@ -14,8 +14,7 @@ resource "proxmox_vm_qemu" "plex01" {
   disk {
     size = "32G"
     type = "scsi"
-    storage = "local"
-    iothread = 0
+    storage = "local-lvm"
   }
   network {
     model = "virtio"
@@ -23,7 +22,7 @@ resource "proxmox_vm_qemu" "plex01" {
     tag = 20
   }
   lifecycle {
-    # prevent_destroy = true
+    prevent_destroy = true
     ignore_changes = [
       network,
     ]
@@ -45,8 +44,7 @@ resource "proxmox_vm_qemu" "docker01" {
   disk {
     size = "32G"
     type = "scsi"
-    storage = "local"
-    iothread = 0
+    storage = "local-lvm"
     discard = "on"
   }
   network {
