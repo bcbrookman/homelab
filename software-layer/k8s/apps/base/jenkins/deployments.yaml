@@ -13,15 +13,26 @@ spec:
       labels:
         app: jenkins
     spec:
+      securityContext:
+        fsGroup: 1000
       containers:
         - name: jenkins
           image: jenkins/jenkins:lts-jdk11
+          resources:
+            requests:
+              cpu: "500m"
+            limits:
+              memory: "2048Mi"
           ports:
             - containerPort: 8080
-              volumeMounts:
-                - name: jenkins-home
-                  mountPath: /var/jenkins_home
+          volumeMounts:
+            - name: jenkins-home
+              mountPath: /var/jenkins_home
       volumes:
         - name: jenkins-home
           persistentVolumeClaim:
             claimName: jenkins-home
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
