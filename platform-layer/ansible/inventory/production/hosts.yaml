@@ -3,10 +3,6 @@
 k3s_vms:
   hosts:
     k3s-prod-vm[01:05]:
-k3s_rpis:
-  hosts:
-    k3s-pi01:
-    k3s-pi03:
 other_servers:
   hosts:
     plex01:
@@ -16,14 +12,12 @@ other_servers:
 all_servers:
   children:
     k3s_vms:
-    k3s_rpis:
     other_servers:
 master:
   children:
     k3s_vms:
 node:
   children:
-    k3s_rpis:
 k3s_cluster:
   children:
     master:

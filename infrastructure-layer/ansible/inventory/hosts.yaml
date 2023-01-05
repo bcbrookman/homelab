@@ -7,9 +7,6 @@ pfsense_firewalls:
 proxmox_servers:
   hosts:
     pve[01:05]:
-raspberry_pis:
-  hosts:
-    k3s-pi[01:04]:
 synology_nas:
   hosts:
     nas:
@@ -24,7 +21,6 @@ unifi_switches:
 all_servers:
   children:
     proxmox_servers:
-    raspberry_pis:
 network_gear:
   children:
     pfsense_firewalls:

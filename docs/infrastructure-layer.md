@@ -11,8 +11,6 @@ Compute resources are provided using the following hardware:
 |Qty.|Model|CPU|Memory|Storage|Usage|
 |----|-----|---|------|-------|-----|
 |5|Lenovo ThinkCentre M910q|Intel i7-7700T 4 Cores, 8 Threads|16GB DDR4|512GB SSD|Proxmox VE|
-|2|Raspberry Pi 4 Model B+|ARM v8 Cortex-A72 4 Cores|8GB LPDDR4|32GB SD Card|K3s|
-|2|Raspberry Pi 4 Model B+|ARM v8 Cortex-A72 4 Cores|4GB LPDDR4|32GB SD Card|K3s|
 
 ## Storage
 
@@ -62,7 +60,6 @@ Physically, the network topology is fairly small using only a handful of desktop
 |1|UniFi FlexHD|---|---|---|Wi-Fi|
 |1|UniFi AP U6 Extender|---|---|---|Wi-Fi|
 |3|UniFi USW-8|---|---|---|Switching|
-|2|UniFi USW Flex|---|---|---|Switching (RPis)|
 
 The network is designed with redundant network paths wherever possible, but much of the service redundancy is handled at the application level.
 
