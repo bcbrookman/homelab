@@ -1,75 +1,21 @@
-resource "proxmox_vm_qemu" "k3s-production" {
-  count = 5
-  ciuser = "brian"
-  name = "k3s-prod-vm0${count.index + 1}"
-  target_node = "pve0${count.index % 5 + 1}"
-  clone = "debian-10-genericcloud-amd64-20211011-792-pve0${count.index % 5 + 1}"
-  agent = 1
-  os_type = "cloud-init"
-  cores = 4
-  sockets = 1
-  cpu = "host"
-  memory = 10240
-  scsihw = "virtio-scsi-pci"
-  onboot = true
-  disk {
-    size = "50G"
-    type = "scsi"
-    storage = "local-lvm"
-  }
-  network {
-    model = "virtio"
-    bridge = "vmbr0"
-    tag = 20
-  }
-  ipconfig0 = "ip=192.168.20.13${count.index + 1}/24,gw=192.168.20.1,ip6=auto"
-  serial {
-    id = 0
-    type = "socket"
-  }
-  lifecycle {
-    prevent_destroy = true
-    ignore_changes = [
-      network,
-    ]
-  }
-  sshkeys = data.sops_file.tfvars.data["sshkeys"]
+module "k3s-production" {
+  source               = "./modules/k3s-cluster"
+  name_prefix          = "k3s-prod-vm"
+  net_cidr_prefix      = "192.168.20.0/24"
+  net_gateway_addr     = "192.168.20.1"
+  net_starting_hostnum = 131
+  net_vlan             = 20
+  sshkeys              = data.sops_file.tfvars.data["sshkeys"]
+  user                 = "brian"
 }
 
-resource "proxmox_vm_qemu" "k3s-staging" {
-  count = 5
-  ciuser = "brian"
-  name = "k3s-staging-vm0${count.index + 1}"
-  target_node = "pve0${count.index % 5 + 1}"
-  clone = "debian-10-genericcloud-amd64-20211011-792-pve0${count.index % 5 + 1}"
-  agent = 1
-  os_type = "cloud-init"
-  cores = 4
-  sockets = 1
-  cpu = "host"
-  memory = 10240
-  scsihw = "virtio-scsi-pci"
-  onboot = true
-  disk {
-    size = "50G"
-    type = "scsi"
-    storage = "local-lvm"
-  }
-  network {
-    model = "virtio"
-    bridge = "vmbr0"
-    tag = 20
-  }
-  ipconfig0 = "ip=192.168.20.14${count.index + 1}/24,gw=192.168.20.1,ip6=auto"
-  serial {
-    id = 0
-    type = "socket"
-  }
-  lifecycle {
-    prevent_destroy = true
-    ignore_changes = [
-      network,
-    ]
-  }
-  sshkeys = data.sops_file.tfvars.data["sshkeys"]
+module "k3s-staging" {
+  source               = "./modules/k3s-cluster"
+  name_prefix          = "k3s-staging-vm"
+  net_cidr_prefix      = "192.168.20.0/24"
+  net_gateway_addr     = "192.168.20.1"
+  net_starting_hostnum = 141
+  net_vlan             = 20
+  sshkeys              = data.sops_file.tfvars.data["sshkeys"]
+  user                 = "brian"
 }
