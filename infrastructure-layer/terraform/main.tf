@@ -21,27 +21,27 @@ data "sops_file" "tfvars" {
 
 variable "pm_api_url" {
   sensitive = true
-  default = "https://pve:8006/api2/json"
+  default   = "https://pve:8006/api2/json"
 }
 
 variable "pm_api_token_id" {
   sensitive = true
-  default = "user@pam!token"
+  default   = "user@pam!token"
 }
 
 variable "pm_api_token_secret" {
   sensitive = true
-  default = "token"
+  default   = "token"
 }
 
 variable "sshkeys" {
   sensitive = true
-  default = "ssh-public-key"
+  default   = "ssh-public-key"
 }
 
 provider "proxmox" {
-  pm_api_url = data.sops_file.tfvars.data["pm_api_url"]
-  pm_api_token_id = data.sops_file.tfvars.data["pm_api_token_id"]
+  pm_api_url          = data.sops_file.tfvars.data["pm_api_url"]
+  pm_api_token_id     = data.sops_file.tfvars.data["pm_api_token_id"]
   pm_api_token_secret = data.sops_file.tfvars.data["pm_api_token_secret"]
-  pm_tls_insecure = true
+  pm_tls_insecure     = true
 }
