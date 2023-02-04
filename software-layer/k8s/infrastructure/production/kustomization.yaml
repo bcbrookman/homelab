@@ -7,3 +7,4 @@ resources:
   - ./metallb/
   - ./namespaces.yaml
   - ./nodes.yaml
+  - ./traefik/
