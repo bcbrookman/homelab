@@ -6,7 +6,6 @@ k3s_vms:
 other_servers:
   hosts:
     plex01:
-    docker01:
 
 # Groups of groups
 all_servers:
