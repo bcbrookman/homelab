@@ -94,6 +94,7 @@ tasks:
     desc: Lint all software-layer files
     dir: software-layer/
     cmds:
+      - echo {{.WORKING_DIR}}
       - cat k8s/clusters/staging/*.y*ml k8s/clusters/production/*.y*ml | $KUBECONFORM
       - $KUSTOMIZE build /k8s/infrastructure/staging | $KUBECONFORM
       - $KUSTOMIZE build /k8s/infrastructure/production | $KUBECONFORM
@@ -108,4 +109,5 @@ tasks:
         docker run -i --rm ghcr.io/yannh/kubeconform:latest-alpine
         -summary
         -schema-location default
+        -schema-location https://raw.githubusercontent.com/kubernetes/kubernetes/master/api/openapi-spec/v3/apis__{{`{{.Group}}`}}__{{`{{.ResourceAPIVersion}}`}}_openapi.json
         -schema-location https://raw.githubusercontent.com/bcbrookman/CRDs-catalog/main/{{`{{.Group}}`}}/{{`{{.ResourceKind}}`}}_{{`{{.ResourceAPIVersion}}`}}.json

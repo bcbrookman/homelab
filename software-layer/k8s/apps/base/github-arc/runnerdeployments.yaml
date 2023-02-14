@@ -1,0 +1,26 @@
+---
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: RunnerDeployment
+metadata:
+  name: homelab-actions-runner
+spec:
+  template:
+    spec:
+      repository: bcbrookman/homelab
+---
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: HorizontalRunnerAutoscaler
+metadata:
+  name: homelab-actions-runner-autoscaler
+spec:
+  scaleTargetRef:
+    kind: RunnerDeployment
+    name: homelab-actions-runner
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: PercentageRunnersBusy
+      scaleUpThreshold: '0.75'
+      scaleDownThreshold: '0.25'
+      scaleUpFactor: '2'
+      scaleDownFactor: '0.5'
