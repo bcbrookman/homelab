@@ -11,3 +11,7 @@ spec:
     name: flux-system
   path: ./software-layer/k8s/infrastructure/production
   prune: true
+  decryption:
+    provider: sops
+    secretRef:
+      name: sops-age
