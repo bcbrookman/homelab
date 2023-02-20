@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - ./buoy/
   - ./github-arc/
-  - ./jenkins/
   - ./pi-hole/
   - ./tautulli/
   - ./unifi/
