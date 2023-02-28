@@ -4,5 +4,6 @@ kind: Kustomization
 namespace: longhorn-system
 resources:
   - ../../base/longhorn/
+  - ./recurringjobs.yaml
 patchesStrategicMerge:
   - ./patches.yaml
