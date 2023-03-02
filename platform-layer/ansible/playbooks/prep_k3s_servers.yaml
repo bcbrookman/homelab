@@ -4,10 +4,18 @@
   become: true
 
   tasks:
-    - name: Install curl
+    - name: Install prerequisite packages
       ansible.builtin.apt:
         update_cache: true
-        package: curl
+        pkg:
+          - curl
+          - open-iscsi
+        state: present
+
+    - name: Install open-iscsi (for Longhorn)
+      ansible.builtin.apt:
+        update_cache: true
+        package: open-iscsi
         state: present
 
     - name: Set alternative for iptables as iptables-legacy
