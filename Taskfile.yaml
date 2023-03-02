@@ -37,7 +37,7 @@ tasks:
   common:ansible-depends:
     deps: [common:pip-depends]
     cmds:
-      - pip3 install --no-input --upgrade ansible ansible-lint
+      - pip3 install --no-input --upgrade ansible==7.3.0 ansible-lint==6.12.2
       - ansible-galaxy install --force --role-file requirements.yaml
 
   common:general-depends:
@@ -88,7 +88,7 @@ tasks:
     deps: [common:general-depends]
     cmds:
       - docker pull k8s.gcr.io/kustomize/kustomize:v4.5.7
-      - docker pull ghcr.io/yannh/kubeconform:latest-alpine
+      - docker pull ghcr.io/yannh/kubeconform:v0.6.1-alpine
 
   software-layer:lint:
     desc: Lint all software-layer files
@@ -106,7 +106,7 @@ tasks:
     env:
       KUSTOMIZE: docker run --rm -v {{.WORKING_DIR}}/k8s:/k8s k8s.gcr.io/kustomize/kustomize:v4.5.7
       KUBECONFORM: >
-        docker run -i --rm ghcr.io/yannh/kubeconform:latest-alpine
+        docker run -i --rm ghcr.io/yannh/kubeconform:v0.6.1-alpine
         -summary
         -schema-location default
         -schema-location https://raw.githubusercontent.com/kubernetes/kubernetes/master/api/openapi-spec/v3/apis__{{`{{.Group}}`}}__{{`{{.ResourceAPIVersion}}`}}_openapi.json
