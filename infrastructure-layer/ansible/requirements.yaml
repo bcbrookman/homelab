@@ -2,3 +2,4 @@
 ---
 roles:
   - name: notmycloud.pve_discord_dark
+    version: main
