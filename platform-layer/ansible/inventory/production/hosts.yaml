@@ -3,9 +3,6 @@
 k3s_vms:
   hosts:
     k3s-prod-vm[01:05]:
-other_servers:
-  hosts:
-    plex01:
 
 # Groups of groups
 all_servers:
