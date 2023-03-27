@@ -62,8 +62,8 @@ tasks:
     deps:
       - common:general-depends
       - common:ansible-depends
-    cmds:
-      - ansible-galaxy install --force --role-file ansible/requirements.yaml
+    # cmds:
+    #   - ansible-galaxy install --force --role-file ansible/requirements.yaml
 
   infrastructure-layer:lint:
     desc: Lint all infrastructure layer files
