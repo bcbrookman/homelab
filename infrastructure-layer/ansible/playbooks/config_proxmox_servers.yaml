@@ -22,6 +22,3 @@
         state: present
         update_cache: false
       notify: Update apt cache
-
-  roles:
-    - notmycloud.pve_discord_dark
