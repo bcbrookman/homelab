@@ -1,0 +1,29 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app: wizarr
+  name: wizarr
+spec:
+  rules:
+    - host: wizarr.local.bcbrookman.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: wizarr
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
+    - host: wizarr.bcbrookman.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: wizarr
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
