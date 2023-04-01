@@ -1,0 +1,38 @@
+---
+version: '3'
+
+includes:
+  reqs:
+    taskfile: ../.requirements/tasks.yaml
+    dir: ../.requirements/
+    internal: true
+
+run: once
+
+tasks:
+  lint:
+    desc: Lint all software-layer files
+    cmds:
+      - task: lint:yaml
+      - cat k8s/clusters/staging/*.y*ml k8s/clusters/production/*.y*ml | $KUBECONFORM
+      - $KUSTOMIZE build /k8s/infrastructure/staging | $KUBECONFORM
+      - $KUSTOMIZE build /k8s/infrastructure/production | $KUBECONFORM
+      - $KUSTOMIZE build /k8s/apps/staging | $KUBECONFORM
+      - $KUSTOMIZE build /k8s/apps/production | $KUBECONFORM
+    vars:
+      WORKING_DIR:
+        sh: pwd
+    env:
+      KUSTOMIZE: docker run --rm -v {{.WORKING_DIR}}/k8s:/k8s k8s.gcr.io/kustomize/kustomize:v4.5.7
+      KUBECONFORM: >
+        docker run -i --rm ghcr.io/yannh/kubeconform:latest-alpine
+        -summary
+        -schema-location default
+        -schema-location https://raw.githubusercontent.com/kubernetes/kubernetes/master/api/openapi-spec/v3/apis__{{`{{.Group}}`}}__{{`{{.ResourceAPIVersion}}`}}_openapi.json
+        -schema-location https://raw.githubusercontent.com/bcbrookman/CRDs-catalog/main/{{`{{.Group}}`}}/{{`{{.ResourceKind}}`}}_{{`{{.ResourceAPIVersion}}`}}.json
+
+  lint:yaml:
+    deps:
+      - reqs:yamllint
+    cmds:
+      - yamllint ./

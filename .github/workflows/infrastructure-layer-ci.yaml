@@ -13,16 +13,14 @@ on:  # yamllint disable-line rule:truthy
 
 jobs:
   lint:
-    runs-on: self-hosted
+    runs-on: [self-hosted, linux]
+
     steps:
       - name: Checkout the repo at current context
         uses: actions/checkout@v3
 
-      - name: Install Task
-        uses: arduino/setup-task@v1
-
       - name: Setup the environment
-        run: task infrastructure-layer:setup
+        run: docker-compose build
 
       - name: Run linters
-        run: task infrastructure-layer:lint
+        run: docker-compose run task infrastructure-layer:lint

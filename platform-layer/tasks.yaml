@@ -1,0 +1,64 @@
+---
+version: '3'
+
+includes:
+  reqs:
+    taskfile: ../.requirements/tasks.yaml
+    dir: ../.requirements/
+    internal: true
+
+run: once
+
+tasks:
+  lint:
+    desc: Lint platform layer files
+    cmds:
+      - task: lint:yaml
+      - task: lint:terraform
+      - task: lint:ansible
+
+  lint:ansible:
+    dir: ./ansible/
+    deps:
+      - reqs:ansible-roles
+      - reqs:ansible-collections
+    cmds:
+      - ansible-lint
+
+  lint:terraform:
+    dir: ./terraform/
+    cmds:
+      - terraform validate
+      - terraform fmt -check -diff
+
+  lint:yaml:
+    deps:
+      - reqs:yamllint
+    cmds:
+      - yamllint ./
+
+  deploy:
+    desc: Deploy the platform layer
+    cmds:
+      - task: deploy:terraform
+      - task: deploy:ansible
+
+  deploy:ansible:
+    dir: ./ansible/
+    deps:
+      - reqs:ansible-roles
+      - reqs:ansible-collections
+    cmds:
+      - ansible-playbook -f 10 -i {{.INVENTORY_DIR}} playbooks/main.yaml
+      - ansible-playbook -f 10 -i {{.INVENTORY_DIR}} k3s-ansible/site.yml
+    vars:
+      INVENTORY_DIR:
+        sh: echo inventory/${HOMELAB_ENV:-staging}/
+
+  deploy:terraform:
+    dir: ./terraform/
+    cmds:
+      - terraform init -input=false
+      - terraform apply -input=false -auto-approve
+    env:
+      TF_WORKSPACE: homelab-pf-layer

@@ -17,7 +17,7 @@ In addition to being a learning environment, my homelab also functions as my hom
 
 My homelab is broken up into layers which very loosely align with the concepts of [IaaS](https://en.wikipedia.org/wiki/Infrastructure_as_a_service), [PaaS](https://en.wikipedia.org/wiki/Platform_as_a_service), and [SaaS](https://en.wikipedia.org/wiki/Software_as_a_service). Modularizing the infrastructure in this way helps me isolate dependencies, and avoid deployment problems.
 
-![homelab layers](docs/assets/homelab-layers-all.svg)
+![homelab layers](docs/content/assets/homelab-layers-all.svg)
 
 - The [Software Layer](https://bcbrookman.github.io/homelab/software-layer/) provides the applications and services consumed by users and systems in my homelab.
 - The [Platform Layer](https://bcbrookman.github.io/homelab/platform-layer/) provides the environments and runtimes which applications and services are deployed on.

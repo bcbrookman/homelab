@@ -1,0 +1,60 @@
+---
+version: '3'
+
+includes:
+  reqs:
+    taskfile: ../.requirements/tasks.yaml
+    dir: ../.requirements/
+    internal: true
+
+run: once
+
+tasks:
+  lint:
+    desc: Lint infrastructure layer files
+    deps:
+      - lint:yaml
+      - lint:terraform
+      - lint:ansible
+
+  lint:yaml:
+    deps:
+      - reqs:yamllint
+    cmds:
+      - yamllint ./
+
+  lint:ansible:
+    dir: ./ansible/
+    deps:
+      - reqs:ansible-roles
+      - reqs:ansible-collections
+    cmds:
+      - ansible-lint
+
+  deploy:
+    desc: Deploy the infrastructure layer
+    cmds:
+      - task: deploy:terraform
+      - task: deploy:ansible
+
+  deploy:ansible:
+    dir: ./ansible/
+    deps:
+      - reqs:ansible-roles
+      - reqs:ansible-collections
+    cmds:
+      - ansible-playbook -f 10 -i inventory/ playbooks/main.yaml
+
+  lint:terraform:
+    dir: ./terraform/
+    cmds:
+      - terraform validate
+      - terraform fmt -check -diff
+
+  deploy:terraform:
+    dir: ./terraform/
+    cmds:
+      - terraform init -input=false
+      - terraform apply -input=false -auto-approve
+    env:
+      TF_WORKSPACE: homelab-pf-layer

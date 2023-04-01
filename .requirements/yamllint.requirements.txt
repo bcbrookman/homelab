@@ -1,0 +1,2 @@
+# Python requirements file
+yamllint==1.28.0
