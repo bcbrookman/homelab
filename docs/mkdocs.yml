@@ -1,7 +1,7 @@
 ---
 site_name: Homelab
-site_url:
-docs_dir: docs
+site_url: https://bcbrookman.github.io/homelab/
+docs_dir: ./content
 
 theme:
   name: material
@@ -19,7 +19,6 @@ theme:
         icon: material/brightness-4
         name: Switch to system preference
 
-
 nav:
   - Overview: index.md
   - Infrastructure Layer: infrastructure-layer.md
@@ -32,5 +31,5 @@ markdown_extensions:
   - pymdownx.pathconverter:
       absolute: false
       base_path: "/"
-      relative_path: /docs
+      relative_path: /docs/content
   - pymdownx.snippets

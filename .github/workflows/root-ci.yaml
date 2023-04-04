@@ -1,5 +1,5 @@
 ---
-name: Infrastructure Layer CI
+name: Root CI
 
 on:  # yamllint disable-line rule:truthy
   workflow_dispatch:
@@ -7,9 +7,9 @@ on:  # yamllint disable-line rule:truthy
     branches:
       - main
     paths:
-      - ".github/workflows/infrastructure-layer*"
+      - ".github/**"
       - ".requirements/**"
-      - "infrastructure-layer/**"
+      - "*/"
 
 jobs:
   lint:
@@ -29,11 +29,5 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: '1.4.4'
-          terraform_wrapper: false
-
       - name: Run linters
-        run: task infrastructure-layer:lint
+        run: task root:lint

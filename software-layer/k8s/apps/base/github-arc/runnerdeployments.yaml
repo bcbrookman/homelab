@@ -7,6 +7,10 @@ spec:
   template:
     spec:
       repository: bcbrookman/homelab
+      dnsConfig:
+        options:
+          - name: "ndots"
+            value: "1"
 ---
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: HorizontalRunnerAutoscaler

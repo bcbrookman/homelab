@@ -8,21 +8,26 @@ on:  # yamllint disable-line rule:truthy
       - main
     paths:
       - ".github/workflows/software-layer*"
+      - ".requirements/**"
       - "software-layer/**"
-      - "Taskfile.yaml"
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux]
+
     steps:
       - name: Checkout the repo at current context
         uses: actions/checkout@v3
 
-      - name: Install Task
+      - name: Setup Task
         uses: arduino/setup-task@v1
+        with:
+          version: '3.19.0'
 
-      - name: Setup the environment
-        run: task software-layer:setup
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
 
       - name: Run linters
         run: task software-layer:lint

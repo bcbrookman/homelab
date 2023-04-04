@@ -1,0 +1,50 @@
+---
+version: '3'
+
+run: once
+
+tasks:
+  default:
+    cmds: [task --list]
+    silent: true
+
+  ansible:
+    desc: Install Ansible
+    cmds:
+      - pip3 install --no-input --upgrade -r {{.REQS_FILE}}
+    status:
+      - python3 -c "import pkg_resources; pkg_resources.require(open('{{.REQS_FILE}}',mode='r'))"
+    vars:
+      REQS_FILE: ./ansible.requirements.txt
+
+  ansible-roles:
+    desc: Install Ansible roles
+    deps:
+      - ansible
+    cmds:
+      - ansible-galaxy role install -r ./ansible.requirements.yaml
+
+  ansible-collections:
+    desc: Install Ansible collections
+    deps:
+      - ansible
+    cmds:
+      - ansible-galaxy collection install -r ./ansible.requirements.yaml
+
+  mkdocs:
+    desc: Install mkdocs
+    cmds:
+      - pip3 install --no-input --upgrade -r {{.REQS_FILE}}
+    status:
+      - python3 -c "import pkg_resources; pkg_resources.require(open('{{.REQS_FILE}}',mode='r'))"
+    vars:
+      REQS_FILE: ./mkdocs.requirements.txt
+
+  yamllint:
+    desc: Install yamllint
+    cmds:
+      - pip3 install --no-input --upgrade -r {{.REQS_FILE}}
+    status:
+      - python3 -c "import pkg_resources; pkg_resources.require(open('{{.REQS_FILE}}',mode='r'))"
+    vars:
+      REQS_FILE: ./yamllint.requirements.txt

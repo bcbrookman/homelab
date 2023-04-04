@@ -1,0 +1,34 @@
+---
+version: '3'
+
+includes:
+  reqs:
+    taskfile: ../.requirements/tasks.yaml
+    dir: ../.requirements/
+    internal: true
+
+tasks:
+  lint:
+    desc: Lint documentation files
+    deps:
+      - lint:yaml
+
+  lint:yaml:
+    deps:
+      - reqs:yamllint
+    cmds:
+      - yamllint ./
+
+  deploy:
+    desc: Deploy documentation to GitHub pages
+    deps:
+      - reqs:mkdocs
+    cmds:
+      - mkdocs gh-deploy
+
+  serve:
+    desc: Serve documentation locally
+    deps:
+      - reqs:mkdocs
+    cmds:
+      - mkdocs serve

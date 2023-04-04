@@ -1,113 +1,133 @@
 ---
 version: '3'
 
-env:
-  ANSIBLE_ROLES_PATH: ~/.ansible/roles/
-  ANSIBLE_COLLECTIONS_PATH: ~/.ansible/collections/
-  YAMLLINT_CONFIG_FILE: '{{.TASKFILE_DIR}}/.yamllint'
+includes:
+  reqs:
+    taskfile: ./.requirements/tasks.yaml
+    dir: ./.requirements/
+    internal: true
+  docs:
+    taskfile: ./docs/tasks.yaml
+    dir: ./docs/
+  infrastructure-layer:
+    aliases: [ifl]
+    taskfile: ./infrastructure-layer/tasks.yaml
+    dir: ./infrastructure-layer/
+  platform-layer:
+    aliases: [pfl]
+    taskfile: ./platform-layer/tasks.yaml
+    dir: ./platform-layer/
+  software-layer:
+    aliases: [swl]
+    taskfile: ./software-layer/tasks.yaml
+    dir: ./software-layer/
 
 run: once
+
+env:
+  ANSIBLE_COLLECTIONS_PATH: ~/.ansible/collections/
+  ANSIBLE_ROLES_PATH: ~/.ansible/roles/
+  TF_WORKSPACE: none
+  TF_IN_AUTOMATION: true
+  YAMLLINT_CONFIG_FILE: '{{.ROOT_DIR}}/.yamllint'
 
 tasks:
   default:
     cmds: [task --list]
     silent: true
 
-  all:setup:
-    aliases: [setup]
-    desc: Install/upgrade all dependencies
-    cmds:
-      - task: common:setup
-      - task: docs:setup
-      - task: infrastructure-layer:setup
-      - task: platform-layer:setup
-      - task: software-layer:setup
-
   all:lint:
     aliases: [lint]
-    desc: Lint all files
+    desc: Lint all the things
     cmds:
-      - task: common:lint
+      - task: root:lint
       - task: infrastructure-layer:lint
       - task: platform-layer:lint
       - task: software-layer:lint
+      - task: docs:lint
 
-  common:pip-depends: pip3 install --no-input --upgrade pip wheel
-
-  common:ansible-depends:
-    deps: [common:pip-depends]
+  all:deploy:
+    aliases: [deploy]
+    desc: Deploy all the things
     cmds:
-      - pip3 install --no-input --upgrade ansible==7.3.0 ansible-lint==6.12.2
-      - ansible-galaxy install --force --role-file requirements.yaml
+      - task: infrastructure-layer:deploy
+      - task: platform-layer:deploy
+      - task: software-layer:deploy
+      - task: docs:deploy
 
-  common:general-depends:
-    desc: Install/upgrade general dependencies common to all layers
-    aliases: [common:setup]
-    deps: [common:pip-depends]
-    cmds: [pip3 install --no-input --upgrade --requirement requirements.txt]
+  docker-test:start:
+    desc: Start container for CI/CD testing
+    cmds:
+      - task: docker-test:pull
+      - task: docker-test:run
+      - task: docker-test:setup
+    status:
+      - docker ps | grep homelab-cicd
 
-  docs:setup:
-    desc: Install/upgrade documentation dependencies
-    dir: docs/
-    deps: [common:pip-depends]
-    cmds: [pip3 install --no-input --upgrade --requirement requirements.txt]
-
-  common:lint:
-    desc: Lint files common to all layers
-    cmds: [yamllint .]
-
-  infrastructure-layer:setup:
-    desc: Install/upgrade infrastructure-layer dependencies
-    dir: infrastructure-layer/
+  docker-test:setup:
+    desc: Run setup tasks inside CI/CD test container
     deps:
-      - common:general-depends
-      - common:ansible-depends
-    # cmds:
-    #   - ansible-galaxy install --force --role-file ansible/requirements.yaml
+      - docker-test:start
+    cmds:
+      - task: docker-test:setup-python
+      - task: docker-test:setup-task
+      - task: docker-test:setup-terraform
+      - task: docker-test:start-dind
 
-  infrastructure-layer:lint:
-    desc: Lint all infrastructure layer files
-    dir: infrastructure-layer/
-    cmds: [cd ansible && ansible-lint]
+  docker-test:kill:
+    desc: Kill CI/CD test container
+    cmds:
+      - docker rm --force homelab-cicd
 
-  platform-layer:setup:
-    desc: Install/upgrade platform-layer dependencies
-    dir: platform-layer/
+  docker-test:exec:
+    desc: Exec into CI/CD test container
     deps:
-      - common:general-depends
-      - common:ansible-depends
-
-  platform-layer:lint:
-    desc: Lint all platform-layer files
-    dir: platform-layer/
-    cmds: [cd ansible && ansible-lint]
-
-  software-layer:setup:
-    desc: Install/upgrade software-layer dependencies
-    dir: software-layer/
-    deps: [common:general-depends]
+      - docker-test:start
     cmds:
-      - docker pull k8s.gcr.io/kustomize/kustomize:v4.5.7
-      - docker pull ghcr.io/yannh/kubeconform:v0.6.1-alpine
+      - docker exec -it homelab-cicd sudo bash
 
-  software-layer:lint:
-    desc: Lint all software-layer files
-    dir: software-layer/
+  docker-test:pull: docker pull summerwind/actions-runner:latest
+
+  docker-test:run: docker run -d --name homelab-cicd
+                   -v ./:/homelab -w /homelab --privileged
+                   summerwind/actions-runner-dind:latest 'sleep infinity'
+
+  docker-test:apt-update: docker exec homelab-cicd sudo apt update
+
+  docker-test:setup-python:
     cmds:
-      - echo {{.WORKING_DIR}}
-      - cat k8s/clusters/staging/*.y*ml k8s/clusters/production/*.y*ml | $KUBECONFORM
-      - $KUSTOMIZE build /k8s/infrastructure/staging | $KUBECONFORM
-      - $KUSTOMIZE build /k8s/infrastructure/production | $KUBECONFORM
-      - $KUSTOMIZE build /k8s/apps/staging | $KUBECONFORM
-      - $KUSTOMIZE build /k8s/apps/production | $KUBECONFORM
-    vars:
-      WORKING_DIR:
-        sh: pwd
-    env:
-      KUSTOMIZE: docker run --rm -v {{.WORKING_DIR}}/k8s:/k8s k8s.gcr.io/kustomize/kustomize:v4.5.7
-      KUBECONFORM: >
-        docker run -i --rm ghcr.io/yannh/kubeconform:v0.6.1-alpine
-        -summary
-        -schema-location default
-        -schema-location https://raw.githubusercontent.com/kubernetes/kubernetes/master/api/openapi-spec/v3/apis__{{`{{.Group}}`}}__{{`{{.ResourceAPIVersion}}`}}_openapi.json
-        -schema-location https://raw.githubusercontent.com/bcbrookman/CRDs-catalog/main/{{`{{.Group}}`}}/{{`{{.ResourceKind}}`}}_{{`{{.ResourceAPIVersion}}`}}.json
+      - task: docker-test:apt-update
+      - docker exec homelab-cicd sudo apt install -y python3.9
+      - docker exec homelab-cicd sudo ln -sf /usr/bin/python3.9 /usr/bin/python3
+    status:
+      - docker exec homelab-cicd python3 --version | grep 3.9
+
+  docker-test:setup-task:
+    cmds:
+      - docker exec homelab-cicd
+        sudo sh -c "$(curl -L https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin/
+    status:
+      - docker exec homelab-cicd task --version
+
+  docker-test:setup-terraform:
+    cmds:
+      - docker exec homelab-cicd
+        sudo curl -L https://releases.hashicorp.com/terraform/1.4.4/terraform_1.4.4_linux_amd64.zip
+        --output /tmp/terraform.zip
+      - docker exec homelab-cicd sudo unzip -o /tmp/terraform.zip -d /tmp/terraform/
+      - docker exec homelab-cicd sudo mv /tmp/terraform/terraform /usr/local/bin/
+    status:
+      - docker exec homelab-cicd terraform -version | grep v1.4.4
+
+  docker-test:start-dind:
+    cmds:
+      - docker exec homelab-cicd sudo dockerd &
+    status:
+      - pgrep -f dockerd
+
+  root:lint:
+    desc: Lint files in the project root
+    deps:
+      - reqs:yamllint
+    cmds:
+      - yamllint *.y?ml .github/ .requirements/
