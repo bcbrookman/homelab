@@ -130,4 +130,4 @@ tasks:
     deps:
       - reqs:yamllint
     cmds:
-      - yamllint *.y?ml .github/
+      - yamllint *.y?ml .github/ .requirements/

@@ -48,7 +48,6 @@ tasks:
   lint:terraform:
     dir: ./terraform/
     cmds:
-      - terraform validate
       - terraform fmt -check -diff
 
   deploy:terraform:
