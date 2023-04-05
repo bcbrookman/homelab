@@ -1,12 +1,12 @@
-firewall_state: stopped
-firewall_enabled_at_boot: false
-systemd_dir: /etc/systemd/system
-k3s_version: v1.23.4+k3s1
-k3s_token: ENC[AES256_GCM,data:q0aq0GWrvW04BBoBqwzNs3kuYdzQLu1br6ibkf2Bs1ShVU8elQo/+GkiIUo6skCbIQA=,iv:sxn59soi1UOsJH+fpmXeCYz2gniq1j9SVtftvCmaJno=,tag:HwAGMozWLa6wQJvnNiP92A==,type:str]
-extra_server_args: --disable servicelb --tls-san 192.168.0.1
-extra_agent_args: null
 apiserver_endpoint: 192.168.0.1
 apiserver_port: 7443
+extra_agent_args: null
+extra_server_args: --disable servicelb --disable local-storage --tls-san 192.168.0.1
+firewall_enabled_at_boot: false
+firewall_state: stopped
+k3s_token: ENC[AES256_GCM,data:z2J7Z48AC+CiyxX3dw8Yx0Tnnn3sQLuno3CFKjX2iIUlUxBsomw0nnrZRP4+ARK5uUc=,iv:Cw3/VtUri74sOw6OogL/suvt9Y0zKs4a/5mv1Q3/do0=,tag:xcpamU/UuzDlHnfLMwIb8w==,type:str]
+k3s_version: v1.23.4+k3s1
+systemd_dir: /etc/systemd/system
 sops:
     kms: []
     gcp_kms: []
@@ -16,14 +16,14 @@ sops:
         - recipient: age1azf8jz2rq6upyktxe0ntqnlnpwlsmuspgqy3ak3rh609vqk2recqdfznyk
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBBVnd5bmdmVG40NFJ0cHBo
-            UEJ0TWdUYktHaG8zZDVqL0VUN25pSTVoMnh3CkhPZWNlUHgvUDd5dnlmODJaQkxU
-            cUJ1dmF3OVI2enZWZkYyY0RLUlFBOEEKLS0tIGJUcEE2cTFXK3EyV3ZSTmVuU0xu
-            WEsrYlZ2NjlLbkFvOUVTYVVwNSt2WjQKVnpDbmHqMjCHim+x0HWId7Sq+pNKrqMt
-            LzgWxe7h7tE8aKjWorXFMZ/5guqhwGhDKApTFG/fUktZPH+prFKx4g==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB2UDVPZkFUMk1JM1dJOXF0
+            QnNsR0d1NE9YTjhmYmV6M3ZhNGxRcEVlL20wCklOUFBud3NYc2xibG5iR0RmQ3p2
+            TUdoYlZhT29zejZrN3M5ZW5ZbkFQUVUKLS0tIGs5WEg0cHIvK1RnWEUvRkJKWUtG
+            aHFMQytnQkRvSit2cTVVMVhXVkllanMKEK6ELpN8i2ztr+P9phOLvflOrNLMAItk
+            YTayI+9bZXBsQ/ZtT5L33FOUhZH9DEPkbFZUu6SRCDY00tPHXCS60w==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2022-12-08T19:57:43Z"
-    mac: ENC[AES256_GCM,data:9EwbLnGaWG+YxoukdytzF4GJfq6CjyCgqmYb3GCXe+FqMT/jYZrQNz2lvV0x8F4wgx/AAmdt2Yl2o8q+VDvLH+DPaS7iaba6RYDH/Qdja8NVj/+P/XSL8yFX9ZGZMdutYefhoLH7rwcrCrFNZ599IPSBcahlWmYKOe9J00aXW+M=,iv:2NNRrQCDihoL5sCuTEzBkHeWPDHM0DiYvkroPyULQ/I=,tag:dMZa6lWu0+s8V25Vw10WIg==,type:str]
+    lastmodified: "2023-04-05T13:58:16Z"
+    mac: ENC[AES256_GCM,data:hbCnewN1Wb832ZjcZZjLa9XevKglXOGiMU8ZcSSmmpv8avHt+TlA9FwnnV0EnDlUnxOLNpc3ZC8/a6L9Gv9VxA81IJAQl7zQNkwdlafwY/2kkRAyBskEtnNGaJ92RshPUI57pLbGUgfVkQ6a0XLC788cJCC538kQfkQQT6Xq2wI=,iv:Srjrajpu5SeMwEHm3LWLf8wFSC7qio3HeK+pkPjnGTg=,tag:+ul926qFxxL3WMj0atV/RA==,type:str]
     pgp: []
     encrypted_regex: (?i)user|pass|secret|key|token|^data$|^stringData$
     version: 3.7.3
