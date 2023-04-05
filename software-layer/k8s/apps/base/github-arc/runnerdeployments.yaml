@@ -6,25 +6,26 @@ metadata:
 spec:
   template:
     spec:
-      repository: bcbrookman/homelab
       dnsConfig:
         options:
-          - name: "ndots"
-            value: "1"
+          - name: ndots
+            value: '1'
+      repository: bcbrookman/homelab
+
 ---
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: HorizontalRunnerAutoscaler
 metadata:
   name: homelab-actions-runner-autoscaler
 spec:
+  maxReplicas: 5
+  metrics:
+    - scaleDownFactor: '0.5'
+      scaleDownThreshold: '0.25'
+      scaleUpFactor: '2'
+      scaleUpThreshold: '0.75'
+      type: PercentageRunnersBusy
+  minReplicas: 1
   scaleTargetRef:
     kind: RunnerDeployment
     name: homelab-actions-runner
-  minReplicas: 1
-  maxReplicas: 5
-  metrics:
-    - type: PercentageRunnersBusy
-      scaleUpThreshold: '0.75'
-      scaleDownThreshold: '0.25'
-      scaleUpFactor: '2'
-      scaleDownFactor: '0.5'

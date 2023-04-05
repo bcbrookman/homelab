@@ -3,55 +3,55 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: &app plex
-  name: *app
+    app: plex
+  name: plex
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: *app
+      app: plex
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: *app
+        app: plex
     spec:
       containers:
         - image: lscr.io/linuxserver/plex:1.31.2.6810-a607d384f-ls157
-          name: *app
-          resources:
-            requests:
-              cpu: 2
-            limits:
-              memory: 4Gi
-          startupProbe: &probe
+          livenessProbe: &ref_0
             httpGet:
               path: /web/index.html
               port: 32400
-          livenessProbe: *probe
+          name: plex
           ports:
             - containerPort: 32400
+          resources:
+            limits:
+              memory: 4Gi
+            requests:
+              cpu: 2
+          startupProbe: *ref_0
           volumeMounts:
-            - name: plex-config
-              mountPath: /config
-            - name: plex-media
-              mountPath: /media
-            - name: plex-transcodes
-              mountPath: /transcodes
+            - mountPath: /config
+              name: plex-config
+            - mountPath: /media
+              name: plex-media
+            - mountPath: /transcodes
+              name: plex-transcodes
+      dnsConfig:
+        options:
+          - name: ndots
+            value: '1'
       volumes:
         - name: plex-config
           persistentVolumeClaim:
             claimName: plex-config
         - name: plex-media
           nfs:
-            server: nas.home.bcbrookman.com
             path: /volume1/plex
             readOnly: false
-        - name: plex-transcodes
-          emptyDir:
+            server: nas.home.bcbrookman.com
+        - emptyDir:
             medium: Memory
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
+          name: plex-transcodes

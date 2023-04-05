@@ -4,7 +4,6 @@ kind: HelmRelease
 metadata:
   name: metallb
 spec:
-  releaseName: metallb
   chart:
     spec:
       chart: metallb
@@ -13,3 +12,4 @@ spec:
         name: metallb
         namespace: flux-system
   interval: 60m
+  releaseName: metallb

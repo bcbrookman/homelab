@@ -4,10 +4,10 @@ kind: Service
 metadata:
   name: longhorn-ui
 spec:
-  type: LoadBalancer
   externalTrafficPolicy: Local
   ports:
     - port: 80
       targetPort: 8000
   selector:
     app: longhorn-ui
+  type: LoadBalancer

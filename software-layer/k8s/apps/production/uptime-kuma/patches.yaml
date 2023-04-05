@@ -7,12 +7,13 @@ spec:
   template:
     spec:
       containers:
-        - name: uptime-kuma
-          image: louislam/uptime-kuma:1-alpine
+        - image: louislam/uptime-kuma:1-alpine
+          name: uptime-kuma
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: uptime-kuma
 spec:
-  loadBalancerIP: "192.168.20.216"
+  loadBalancerIP: 192.168.20.216

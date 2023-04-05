@@ -15,31 +15,31 @@ spec:
       labels:
         app: uptime-kuma
     spec:
-      restartPolicy: Always
       containers:
-        - image: louislam/uptime-kuma:latest
+        - env:
+            - name: PUID
+              value: '1000'
+            - name: PGID
+              value: '1000'
+          image: louislam/uptime-kuma:latest
           name: uptime-kuma
-          resources:
-            requests:
-              cpu: 100m
-            limits:
-              memory: 128Mi
-          env:
-            - name: "PUID"
-              value: "1000"
-            - name: "PGID"
-              value: "1000"
           ports:
             - containerPort: 80
             - containerPort: 443
+          resources:
+            limits:
+              memory: 128Mi
+            requests:
+              cpu: 100m
           volumeMounts:
-            - name: uptime-kuma-data
-              mountPath: /app/data
+            - mountPath: /app/data
+              name: uptime-kuma-data
+      dnsConfig:
+        options:
+          - name: ndots
+            value: '1'
+      restartPolicy: Always
       volumes:
         - name: uptime-kuma-data
           persistentVolumeClaim:
             claimName: uptime-kuma-data
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"

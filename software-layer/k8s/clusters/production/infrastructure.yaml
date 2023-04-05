@@ -5,13 +5,13 @@ metadata:
   name: infrastructure
   namespace: flux-system
 spec:
-  interval: 10m0s
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  path: ./software-layer/k8s/infrastructure/production
-  prune: true
   decryption:
     provider: sops
     secretRef:
       name: sops-age
+  interval: 10m0s
+  path: ./software-layer/k8s/infrastructure/production
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system

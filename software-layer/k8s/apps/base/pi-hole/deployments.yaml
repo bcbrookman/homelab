@@ -12,7 +12,6 @@ spec:
       app: pihole
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: pihole
     spec:
@@ -21,30 +20,33 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:
                 matchExpressions:
-                  - key: "app"
+                  - key: app
                     operator: In
                     values:
                       - pihole
-              topologyKey: "kubernetes.io/hostname"
-      restartPolicy: Always
+              topologyKey: kubernetes.io/hostname
       containers:
-        - image: pihole/pihole:latest
+        - env:
+            - name: DNS1
+              value: 192.168.20.1
+            - name: DNSMASQ_LISTENING
+              value: all
+          image: pihole/pihole:latest
           name: pihole
-          resources:
-            requests:
-              memory: "128Mi"
-              cpu: "50m"
-            limits:
-              memory: "128Mi"
-              cpu: "100m"
-          env:
-            - name: 'DNS1'
-              value: '192.168.20.1'
-            - name: 'DNSMASQ_LISTENING'
-              value: "all"
           ports:
             - containerPort: 53
               protocol: UDP
             - containerPort: 53
             - containerPort: 80
             - containerPort: 443
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi
+      dnsConfig:
+        options:
+          - name: ndots
+            value: '1'

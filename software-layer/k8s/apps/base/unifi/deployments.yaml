@@ -1,20 +1,19 @@
-# unifi.deployment.yaml
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: unifi
   labels:
     app: unifi
     env: prod
+  name: unifi
 spec:
   replicas: 1
-  strategy:
-    type: Recreate
   selector:
     matchLabels:
       app: unifi
       env: prod
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -22,16 +21,11 @@ spec:
         env: prod
     spec:
       containers:
-        - name: unifi
-          image: ghcr.io/linuxserver/unifi-controller:latest
-          resources:
-            requests:
-              cpu: 200m
-            limits:
-              memory: 2048Mi
-          env:
+        - env:
             - name: TZ
               value: UTC
+          image: ghcr.io/linuxserver/unifi-controller:latest
+          name: unifi
           ports:
             - containerPort: 8080
             - containerPort: 8443
@@ -40,14 +34,19 @@ spec:
             - containerPort: 8843
             - containerPort: 8880
             - containerPort: 6789
+          resources:
+            limits:
+              memory: 2048Mi
+            requests:
+              cpu: 200m
           volumeMounts:
-            - name: unifi-data
-              mountPath: /config
+            - mountPath: /config
+              name: unifi-data
+      dnsConfig:
+        options:
+          - name: ndots
+            value: '1'
       volumes:
         - name: unifi-data
           persistentVolumeClaim:
             claimName: unifi-data
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
