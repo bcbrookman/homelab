@@ -28,8 +28,8 @@ spec:
           livenessProbe:
             failureThreshold: 6
             httpGet:
-              path: /identity
-              port: 32400
+              path: /status
+              port: 8080
             initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
@@ -45,8 +45,8 @@ spec:
           readinessProbe:
             failureThreshold: 3
             httpGet:
-              path: /identity
-              port: 32400
+              path: /status
+              port: 8080
             initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 5

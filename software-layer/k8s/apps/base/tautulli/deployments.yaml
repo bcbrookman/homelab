@@ -29,8 +29,8 @@ spec:
           livenessProbe:
             failureThreshold: 6
             httpGet:
-              path: /identity
-              port: 32400
+              path: /status
+              port: 8181
             initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
@@ -40,8 +40,8 @@ spec:
           readinessProbe:
             failureThreshold: 3
             httpGet:
-              path: /identity
-              port: 32400
+              path: /status
+              port: 8181
             initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 5
@@ -57,7 +57,6 @@ spec:
         options:
           - name: ndots
             value: '1'
-      restartPolicy: Always
       volumes:
         - name: tautulli-config
           persistentVolumeClaim:

@@ -24,10 +24,25 @@ spec:
             - name: PGID
               value: '1000'
           image: louislam/uptime-kuma:latest
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /
+              port: 3001
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
           name: uptime-kuma
           ports:
-            - containerPort: 80
-            - containerPort: 443
+            - containerPort: 3001
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3001
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
           resources:
             limits:
               memory: 128Mi

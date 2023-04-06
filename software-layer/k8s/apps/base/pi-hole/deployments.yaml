@@ -32,6 +32,13 @@ spec:
             - name: DNSMASQ_LISTENING
               value: all
           image: pihole/pihole:latest
+          livenessProbe:
+            failureThreshold: 6
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            tcpSocket:
+              port: 53
+            timeoutSeconds: 1
           name: pihole
           ports:
             - containerPort: 53
@@ -39,6 +46,13 @@ spec:
             - containerPort: 53
             - containerPort: 80
             - containerPort: 443
+          readinessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            tcpSocket:
+              port: 53
+            timeoutSeconds: 1
           resources:
             limits:
               cpu: 100m

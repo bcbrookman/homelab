@@ -19,19 +19,30 @@ spec:
     spec:
       containers:
         - image: lscr.io/linuxserver/plex:1.31.2.6810-a607d384f-ls157
-          livenessProbe: &ref_0
+          livenessProbe:
+            failureThreshold: 6
             httpGet:
-              path: /web/index.html
+              path: /identity
               port: 32400
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
           name: plex
           ports:
             - containerPort: 32400
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /identity
+              port: 32400
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
           resources:
             limits:
               memory: 4Gi
             requests:
-              cpu: 2
-          startupProbe: *ref_0
+              cpu: '2'
           volumeMounts:
             - mountPath: /config
               name: plex-config
