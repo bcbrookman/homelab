@@ -10,6 +10,8 @@ spec:
   selector:
     matchLabels:
       app: uptime-kuma
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:

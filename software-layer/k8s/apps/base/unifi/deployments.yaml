@@ -25,6 +25,14 @@ spec:
             - name: TZ
               value: UTC
           image: ghcr.io/linuxserver/unifi-controller:latest
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /identity
+              port: 32400
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
           name: unifi
           ports:
             - containerPort: 8080
@@ -34,6 +42,14 @@ spec:
             - containerPort: 8843
             - containerPort: 8880
             - containerPort: 6789
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /identity
+              port: 32400
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
           resources:
             limits:
               memory: 2048Mi

@@ -10,37 +10,55 @@ spec:
   selector:
     matchLabels:
       app: tautulli
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: tautulli
     spec:
-      restartPolicy: Always
       containers:
-        - image: lscr.io/linuxserver/tautulli:latest
+        - env:
+            - name: PUID
+              value: '1000'
+            - name: PGID
+              value: '1000'
+            - name: TZ
+              value: UTC
+          image: lscr.io/linuxserver/tautulli:latest
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /identity
+              port: 32400
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
           name: tautulli
-          resources:
-            requests:
-              cpu: 100m
-            limits:
-              memory: 200Mi
-          env:
-            - name: "PUID"
-              value: "1000"
-            - name: "PGID"
-              value: "1000"
-            - name: "TZ"
-              value: "UTC"
           ports:
             - containerPort: 8181
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /identity
+              port: 32400
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+          resources:
+            limits:
+              memory: 200Mi
+            requests:
+              cpu: 100m
           volumeMounts:
-            - name: tautulli-config
-              mountPath: /config
+            - mountPath: /config
+              name: tautulli-config
+      dnsConfig:
+        options:
+          - name: ndots
+            value: '1'
+      restartPolicy: Always
       volumes:
         - name: tautulli-config
           persistentVolumeClaim:
             claimName: tautulli-config
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
