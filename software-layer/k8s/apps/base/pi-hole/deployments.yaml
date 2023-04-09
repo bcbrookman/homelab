@@ -60,7 +60,13 @@ spec:
             requests:
               cpu: 50m
               memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: true
+            privileged: false
       dnsConfig:
         options:
           - name: ndots
             value: '1'
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault

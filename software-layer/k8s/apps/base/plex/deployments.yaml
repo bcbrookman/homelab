@@ -18,7 +18,14 @@ spec:
         app: plex
     spec:
       containers:
-        - image: lscr.io/linuxserver/plex:1.31.2.6810-a607d384f-ls157
+        - env:
+            - name: PUID
+              value: '1001'
+            - name: PGID
+              value: '1001'
+            - name: TZ
+              value: UTC
+          image: lscr.io/linuxserver/plex:1.31.2.6810-a607d384f-ls157
           livenessProbe:
             failureThreshold: 6
             httpGet:
@@ -43,6 +50,9 @@ spec:
               memory: 4Gi
             requests:
               cpu: '2'
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
           volumeMounts:
             - mountPath: /config
               name: plex-config
@@ -54,6 +64,9 @@ spec:
         options:
           - name: ndots
             value: '1'
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       volumes:
         - name: plex-config
           persistentVolumeClaim:

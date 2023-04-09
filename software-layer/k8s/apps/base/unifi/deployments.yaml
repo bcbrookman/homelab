@@ -22,6 +22,10 @@ spec:
     spec:
       containers:
         - env:
+            - name: PUID
+              value: '1001'
+            - name: PGID
+              value: '1001'
             - name: TZ
               value: UTC
           image: ghcr.io/linuxserver/unifi-controller:latest
@@ -55,6 +59,9 @@ spec:
               memory: 2048Mi
             requests:
               cpu: 200m
+          securityContext:
+            allowPrivilegeEscalation: true
+            privileged: false
           volumeMounts:
             - mountPath: /config
               name: unifi-data
@@ -62,6 +69,9 @@ spec:
         options:
           - name: ndots
             value: '1'
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       volumes:
         - name: unifi-data
           persistentVolumeClaim:

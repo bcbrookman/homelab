@@ -20,9 +20,9 @@ spec:
       containers:
         - env:
             - name: PUID
-              value: '1000'
+              value: '1001'
             - name: PGID
-              value: '1000'
+              value: '1001'
             - name: TZ
               value: UTC
           image: lscr.io/linuxserver/tautulli:latest
@@ -50,6 +50,9 @@ spec:
               memory: 200Mi
             requests:
               cpu: 100m
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
           volumeMounts:
             - mountPath: /config
               name: tautulli-config
@@ -57,6 +60,9 @@ spec:
         options:
           - name: ndots
             value: '1'
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       volumes:
         - name: tautulli-config
           persistentVolumeClaim:
