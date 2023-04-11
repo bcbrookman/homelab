@@ -1,16 +1,4 @@
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: tautulli
-spec:
-  template:
-    spec:
-      containers:
-        - image: lscr.io/linuxserver/tautulli:latest
-          name: tautulli
-
----
 apiVersion: v1
 kind: Service
 metadata:

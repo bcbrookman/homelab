@@ -1,16 +1,4 @@
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: uptime-kuma
-spec:
-  template:
-    spec:
-      containers:
-        - image: louislam/uptime-kuma:1-alpine
-          name: uptime-kuma
-
----
 apiVersion: v1
 kind: Service
 metadata:

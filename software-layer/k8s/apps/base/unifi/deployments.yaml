@@ -28,7 +28,7 @@ spec:
               value: '1001'
             - name: TZ
               value: UTC
-          image: ghcr.io/linuxserver/unifi-controller:latest
+          image: lscr.io/linuxserver/unifi-controller:7.3.83-ls187
           livenessProbe:
             failureThreshold: 6
             httpGet:

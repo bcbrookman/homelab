@@ -25,7 +25,7 @@ spec:
               value: '1001'
             - name: TZ
               value: UTC
-          image: louislam/uptime-kuma:latest
+          image: louislam/uptime-kuma:1.21.2-alpine
           livenessProbe:
             failureThreshold: 6
             httpGet:

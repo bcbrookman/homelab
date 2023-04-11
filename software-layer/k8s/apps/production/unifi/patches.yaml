@@ -1,16 +1,4 @@
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: unifi
-spec:
-  template:
-    spec:
-      containers:
-        - image: ghcr.io/linuxserver/unifi-controller:7.3.76
-          name: unifi
-
----
 apiVersion: v1
 kind: Service
 metadata:
