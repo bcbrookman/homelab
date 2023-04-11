@@ -56,4 +56,4 @@ tasks:
       - terraform init -input=false
       - terraform apply -input=false -auto-approve
     env:
-      TF_WORKSPACE: homelab-pf-layer
+      TF_WORKSPACE: homelab-if-layer

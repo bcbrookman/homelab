@@ -5,17 +5,17 @@ metadata:
   name: apps
   namespace: flux-system
 spec:
-  interval: 10m0s
-  dependsOn:
-    - name: infrastructure
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  path: ./software-layer/k8s/apps/production
-  prune: true
-  wait: true
-  timeout: 5m0s
   decryption:
     provider: sops
     secretRef:
       name: sops-age
+  dependsOn:
+    - name: infrastructure
+  interval: 10m0s
+  path: ./software-layer/k8s/apps/production
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  timeout: 5m0s
+  wait: true

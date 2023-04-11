@@ -1,18 +1,7 @@
 ---
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: uptime-kuma
-spec:
-  template:
-    spec:
-      containers:
-        - name: uptime-kuma
-          image: louislam/uptime-kuma:1-alpine
----
 apiVersion: v1
 kind: Service
 metadata:
   name: uptime-kuma
 spec:
-  loadBalancerIP: "192.168.20.236"
+  loadBalancerIP: 192.168.20.236

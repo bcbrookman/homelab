@@ -10,36 +10,60 @@ spec:
   selector:
     matchLabels:
       app: uptime-kuma
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: uptime-kuma
     spec:
-      restartPolicy: Always
       containers:
-        - image: louislam/uptime-kuma:latest
+        - env:
+            - name: PUID
+              value: '1001'
+            - name: PGID
+              value: '1001'
+            - name: TZ
+              value: UTC
+          image: louislam/uptime-kuma:1.21.2-alpine
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /
+              port: 3001
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
           name: uptime-kuma
+          ports:
+            - containerPort: 3001
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 3001
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
           resources:
-            requests:
-              cpu: 100m
             limits:
               memory: 128Mi
-          env:
-            - name: "PUID"
-              value: "1000"
-            - name: "PGID"
-              value: "1000"
-          ports:
-            - containerPort: 80
-            - containerPort: 443
+            requests:
+              cpu: 100m
+          securityContext:
+            allowPrivilegeEscalation: true
+            privileged: false
           volumeMounts:
-            - name: uptime-kuma-data
-              mountPath: /app/data
+            - mountPath: /app/data
+              name: uptime-kuma-data
+      dnsConfig:
+        options:
+          - name: ndots
+            value: '1'
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       volumes:
         - name: uptime-kuma-data
           persistentVolumeClaim:
             claimName: uptime-kuma-data
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"

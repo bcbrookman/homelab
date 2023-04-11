@@ -3,55 +3,79 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: &app plex
-  name: *app
+    app: plex
+  name: plex
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: *app
+      app: plex
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: *app
+        app: plex
     spec:
       containers:
-        - image: lscr.io/linuxserver/plex:1.31.2.6810-a607d384f-ls157
-          name: *app
-          resources:
-            requests:
-              cpu: 2
-            limits:
-              memory: 4Gi
-          startupProbe: &probe
+        - env:
+            - name: PUID
+              value: '1001'
+            - name: PGID
+              value: '1001'
+            - name: TZ
+              value: UTC
+          image: lscr.io/linuxserver/plex:1.31.2.6810-a607d384f-ls157
+          livenessProbe:
+            failureThreshold: 6
             httpGet:
-              path: /web/index.html
+              path: /identity
               port: 32400
-          livenessProbe: *probe
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+          name: plex
           ports:
             - containerPort: 32400
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /identity
+              port: 32400
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+          resources:
+            limits:
+              memory: 4Gi
+            requests:
+              cpu: '2'
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
           volumeMounts:
-            - name: plex-config
-              mountPath: /config
-            - name: plex-media
-              mountPath: /media
-            - name: plex-transcodes
-              mountPath: /transcodes
+            - mountPath: /config
+              name: plex-config
+            - mountPath: /media
+              name: plex-media
+            - mountPath: /transcodes
+              name: plex-transcodes
+      dnsConfig:
+        options:
+          - name: ndots
+            value: '1'
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       volumes:
         - name: plex-config
           persistentVolumeClaim:
             claimName: plex-config
         - name: plex-media
           nfs:
-            server: nas.home.bcbrookman.com
             path: /volume1/plex
             readOnly: false
-        - name: plex-transcodes
-          emptyDir:
+            server: nas.home.bcbrookman.com
+        - emptyDir:
             medium: Memory
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
+          name: plex-transcodes

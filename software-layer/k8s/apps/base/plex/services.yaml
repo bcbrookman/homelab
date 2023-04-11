@@ -3,13 +3,13 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: &app plex
-  name: *app
+    app: plex
+  name: plex
 spec:
-  type: ClusterIP
   ports:
     - name: http
       port: 32400
       targetPort: 32400
   selector:
-    app: *app
+    app: plex
+  type: ClusterIP

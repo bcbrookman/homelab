@@ -1,20 +1,19 @@
-# unifi.deployment.yaml
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: unifi
   labels:
     app: unifi
     env: prod
+  name: unifi
 spec:
   replicas: 1
-  strategy:
-    type: Recreate
   selector:
     matchLabels:
       app: unifi
       env: prod
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -22,16 +21,23 @@ spec:
         env: prod
     spec:
       containers:
-        - name: unifi
-          image: ghcr.io/linuxserver/unifi-controller:latest
-          resources:
-            requests:
-              cpu: 200m
-            limits:
-              memory: 2048Mi
-          env:
+        - env:
+            - name: PUID
+              value: '1001'
+            - name: PGID
+              value: '1001'
             - name: TZ
               value: UTC
+          image: lscr.io/linuxserver/unifi-controller:7.3.83-ls187
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /status
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+          name: unifi
           ports:
             - containerPort: 8080
             - containerPort: 8443
@@ -40,14 +46,33 @@ spec:
             - containerPort: 8843
             - containerPort: 8880
             - containerPort: 6789
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /status
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+          resources:
+            limits:
+              memory: 2048Mi
+            requests:
+              cpu: 200m
+          securityContext:
+            allowPrivilegeEscalation: true
+            privileged: false
           volumeMounts:
-            - name: unifi-data
-              mountPath: /config
+            - mountPath: /config
+              name: unifi-data
+      dnsConfig:
+        options:
+          - name: ndots
+            value: '1'
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       volumes:
         - name: unifi-data
           persistentVolumeClaim:
             claimName: unifi-data
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"

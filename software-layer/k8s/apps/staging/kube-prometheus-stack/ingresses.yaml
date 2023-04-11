@@ -8,20 +8,20 @@ spec:
     - host: grafana-stg.home.bcbrookman.com
       http:
         paths:
-          - path: /
-            pathType: Prefix
-            backend:
+          - backend:
               service:
                 name: kube-prometheus-stack-grafana
                 port:
                   number: 80
+            path: /
+            pathType: Prefix
     - host: prometheus-stg.home.bcbrookman.com
       http:
         paths:
-          - path: /
-            pathType: Prefix
-            backend:
+          - backend:
               service:
                 name: kube-prometheus-stack-prometheus
                 port:
                   number: 9090
+            path: /
+            pathType: Prefix

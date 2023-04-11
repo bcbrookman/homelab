@@ -4,7 +4,6 @@ kind: HelmRelease
 metadata:
   name: longhorn
 spec:
-  releaseName: longhorn
   chart:
     spec:
       chart: longhorn
@@ -12,4 +11,6 @@ spec:
         kind: HelmRepository
         name: longhorn
         namespace: flux-system
+      version: 1.3.2
   interval: 60m
+  releaseName: longhorn
