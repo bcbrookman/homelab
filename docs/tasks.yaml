@@ -19,15 +19,15 @@ tasks:
     cmds:
       - yamllint ./
 
-  deploy:
-    desc: Deploy documentation to GitHub pages
+  build:
+    desc: Build documentation site locally
     deps:
       - reqs:mkdocs
     cmds:
-      - mkdocs gh-deploy
+      - mkdocs build
 
   serve:
-    desc: Serve documentation locally
+    desc: Build and serve documentation locally
     deps:
       - reqs:mkdocs
     cmds:
