@@ -46,6 +46,11 @@ jobs:
           terraform_version: '1.4.4'
           terraform_wrapper: false
 
+      - name: Setup Mozilla SOPS
+        uses: mdgreenwald/mozilla-sops-action@v1.4.1
+        with:
+          version: '3.7.3'
+
       - name: Setup Ansible SSH Keys
         run: |
           mkdir -p ~/.ssh/
