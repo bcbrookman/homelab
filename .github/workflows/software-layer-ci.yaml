@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout the repo at current context
         uses: actions/checkout@v3
+        with:
+          submodules: true
 
       - name: Setup Task
         uses: arduino/setup-task@v1
