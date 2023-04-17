@@ -44,11 +44,19 @@ tasks:
       - reqs:ansible-collections
     cmds:
       - ansible-playbook -f 10 -i inventory/ playbooks/main.yaml
+    env:
+      ANSIBLE_VARS_ENABLED: host_group_vars,community.sops.sops
+      ANSIBLE_SOPS_AGE_KEY:
+        sh: echo ${SOPS_AGE_KEY}
 
   lint:terraform:
     dir: ./terraform/
     cmds:
       - terraform fmt -check -diff
+      - terraform init -input=false
+      - terraform validate
+    env:
+      TF_WORKSPACE: homelab-if-layer
 
   deploy:terraform:
     dir: ./terraform/

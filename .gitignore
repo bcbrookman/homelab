@@ -21,3 +21,6 @@ site/
 # Terraform local files
 *.tfstate*
 **/.terraform
+
+# Other
+.env*

@@ -36,3 +36,6 @@ tasks:
       - reqs:yamllint
     cmds:
       - yamllint ./
+
+  deploy:
+    desc: Deploy the software layer

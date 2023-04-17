@@ -26,6 +26,7 @@ run: once
 
 env:
   ANSIBLE_COLLECTIONS_PATH: ~/.ansible/collections/
+  ANSIBLE_HOST_KEY_CHECKING: "False"
   ANSIBLE_ROLES_PATH: ~/.ansible/roles/
   TF_WORKSPACE: none
   TF_IN_AUTOMATION: true
@@ -60,7 +61,6 @@ tasks:
     cmds:
       - task: docker-test:pull
       - task: docker-test:run
-      - task: docker-test:setup
     status:
       - docker ps | grep homelab-cicd
 
@@ -70,6 +70,8 @@ tasks:
       - docker-test:start
     cmds:
       - task: docker-test:setup-python
+      - task: docker-test:setup-ansible
+      - task: docker-test:setup-sops
       - task: docker-test:setup-task
       - task: docker-test:setup-terraform
       - task: docker-test:start-dind
@@ -79,20 +81,30 @@ tasks:
     cmds:
       - docker rm --force homelab-cicd
 
-  docker-test:exec:
+  docker-test:shell:
     desc: Exec into CI/CD test container
     deps:
       - docker-test:start
     cmds:
-      - docker exec -it homelab-cicd sudo bash
+      - docker exec -it homelab-cicd bash
 
   docker-test:pull: docker pull summerwind/actions-runner:latest
 
-  docker-test:run: docker run -d --name homelab-cicd
+  docker-test:run: docker run --name homelab-cicd
+                   --detach -it --env-file .env.staging
                    -v ./:/homelab -w /homelab --privileged
-                   summerwind/actions-runner-dind:latest 'sleep infinity'
+                   summerwind/actions-runner-dind:latest bash -c 'sleep infinity'
+                   || docker start homelab-cicd
 
   docker-test:apt-update: docker exec homelab-cicd sudo apt update
+
+  docker-test:setup-ansible:
+    cmds:
+      - docker exec homelab-cicd bash -c 'mkdir -p ~/.ssh/'
+      - docker exec homelab-cicd bash -c 'echo -e ${ANSIBLE_SSH_KEY} > ~/.ssh/id_rsa'
+      - docker exec homelab-cicd bash -c 'chmod 0600 ~/.ssh/id_rsa'
+    status:
+      - docker exec homelab-cicd bash -c 'test -f ~/.ssh/id_rsa'
 
   docker-test:setup-python:
     cmds:
@@ -109,6 +121,16 @@ tasks:
     status:
       - docker exec homelab-cicd task --version
 
+  docker-test:setup-sops:
+    cmds:
+      - docker exec homelab-cicd
+        sudo curl -L https://github.com/mozilla/sops/releases/download/v3.7.3/sops-v3.7.3.linux.amd64
+        --output /tmp/sops
+      - docker exec homelab-cicd sudo mv /tmp/sops /usr/local/bin/
+      - docker exec homelab-cicd sudo chmod +x /usr/local/bin/sops
+    status:
+      - docker exec homelab-cicd sops --version | grep 3.7.3
+
   docker-test:setup-terraform:
     cmds:
       - docker exec homelab-cicd
@@ -116,14 +138,19 @@ tasks:
         --output /tmp/terraform.zip
       - docker exec homelab-cicd sudo unzip -o /tmp/terraform.zip -d /tmp/terraform/
       - docker exec homelab-cicd sudo mv /tmp/terraform/terraform /usr/local/bin/
+      - docker exec homelab-cicd bash -c 'mkdir -p ~/.terraform.d/'
+      - docker exec homelab-cicd bash -c 'echo {{.TF_CREDENTIALS_JSON}} > ~/.terraform.d/credentials.tfrc.json'
     status:
       - docker exec homelab-cicd terraform -version | grep v1.4.4
+      - docker exec homelab-cicd bash -c 'test -f ~/.terraform.d/credentials.tfrc.json'
+    vars:
+      TF_CREDENTIALS_JSON: '{\"credentials\": {\"app.terraform.io\": {\"token\": \"${TF_API_TOKEN}\"}}}'
 
   docker-test:start-dind:
     cmds:
-      - docker exec homelab-cicd sudo dockerd &
+      - docker exec homelab-cicd bash -c 'sudo dockerd &'
     status:
-      - pgrep -f dockerd
+      - docker exec homelab-cicd pgrep -r S -f dockerd
 
   root:lint:
     desc: Lint files in the project root
