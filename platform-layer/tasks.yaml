@@ -52,10 +52,10 @@ tasks:
       - reqs:ansible-roles
       - reqs:ansible-collections
     cmds:
-      - ansible-playbook -f 10 -i inventory/staging/ playbooks/main.yaml
-      - ansible-playbook -f 10 -i inventory/staging/ k3s-ansible/site.yml
-      - ansible-playbook -f 10 -i inventory/production/ playbooks/main.yaml
-      - ansible-playbook -f 10 -i inventory/production/ k3s-ansible/site.yml
+      - ansible-playbook -f 10 -i inventory/staging/playbooks/main.yaml
+      - ansible-playbook -f 10 -i inventory/staging/k3s-ansible/site.yml
+      - ansible-playbook -f 10 -i inventory/production/playbooks/main.yaml
+      - ansible-playbook -f 10 -i inventory/production/k3s-ansible/site.yml
     env:
       ANSIBLE_VARS_ENABLED: host_group_vars,community.sops.sops
       ANSIBLE_SOPS_AGE_KEY:
