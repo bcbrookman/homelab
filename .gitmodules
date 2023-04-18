@@ -2,9 +2,6 @@
 	path = platform-layer/ansible/k3s-ansible
 	url = https://github.com/bcbrookman/k3s-ansible.git
 	branch = k3s-ha-merged
-[submodule "platform-layer/ansible/roles/duplicati"]
-	path = infrastructure-layer/ansible/roles/duplicati
-	url = https://github.com/bcbrookman/ansible-role-duplicati.git
 [submodule "infrastructure-layer/homelab-desk"]
 	path = infrastructure-layer/homelab-desk
 	url = https://github.com/bcbrookman/homelab-desk
