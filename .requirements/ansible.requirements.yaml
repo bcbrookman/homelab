@@ -9,6 +9,9 @@ roles:
     version: 2.3.1
   - name: sbaerlocher.snmp
     version: 1.8.0
+  - name: bcbrookman.duplicati
+    src: https://github.com/bcbrookman/ansible-role-duplicati.git
+    version: main
 
 collections:
   - name: community.sops

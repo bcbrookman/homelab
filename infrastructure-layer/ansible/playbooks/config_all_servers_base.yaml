@@ -15,7 +15,7 @@
     - geerlingguy.ntp
     - geerlingguy.security
     - sbaerlocher.snmp
-    - roles/duplicati
+    - bcbrookman.duplicati
 
   tasks:
     - name: Make sure QEMU Guest Agent is installed, if needed
