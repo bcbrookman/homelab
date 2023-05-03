@@ -11,5 +11,8 @@ exclude_paths:
   - ./platform-layer/ansible/roles/
   - ./software-layer/ansible/roles/
 
+warn_list:
+  - package-latest
+
 skip_list:
   - yaml  # Skip errors reported by yamllint

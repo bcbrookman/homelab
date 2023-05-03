@@ -1,9 +1,15 @@
 ---
-- name: Upgrade system packages
+- name: Install/upgrade pfSense packages
+  ansible.builtin.import_playbook: install_pfsense_packages.yaml
+
+- name: Apply base pfSense configurations
+  ansible.builtin.import_playbook: config_pfsense_base.yaml
+
+- name: Upgrade all server apt packages
   ansible.builtin.import_playbook: upgrade_apt_packages.yaml
 
-- name: Apply base configurations
+- name: Apply base server configurations
   ansible.builtin.import_playbook: config_all_servers_base.yaml
 
-- name: Apply more specific configurations
+- name: Apply proxmox specific server configurations
   ansible.builtin.import_playbook: config_proxmox_servers.yaml

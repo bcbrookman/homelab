@@ -16,3 +16,5 @@ roles:
 collections:
   - name: community.sops
     version: 1.6.1
+  - name: pfsensible.core
+    version: 0.5.3

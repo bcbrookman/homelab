@@ -1,8 +1,10 @@
 ---
 # Groups of hosts
-pfsense_firewalls:
+pfsense_wan_firewalls:
   hosts:
     pfsense:
+pfsense_lan_firewalls:
+  hosts:
     pfsense[01:02]:
 proxmox_servers:
   hosts:
@@ -18,6 +20,10 @@ unifi_switches:
     ubnt-sw[01:05]:
 
 # Groups of groups
+pfsense_firewalls:
+  children:
+    pfsense_wan_firewalls:
+    pfsense_lan_firewalls:
 all_servers:
   children:
     proxmox_servers:

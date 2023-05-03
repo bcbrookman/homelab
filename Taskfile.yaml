@@ -27,6 +27,7 @@ run: once
 env:
   ANSIBLE_COLLECTIONS_PATH: ~/.ansible/collections/
   ANSIBLE_HOST_KEY_CHECKING: "False"
+  ANSIBLE_PIPELINING: "True"
   ANSIBLE_ROLES_PATH: ~/.ansible/roles/
   TF_WORKSPACE: none
   TF_IN_AUTOMATION: true
