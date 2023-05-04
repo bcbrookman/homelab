@@ -1,0 +1,20 @@
+---
+- name: Apply pfSense base configurations
+  hosts: pfsense_firewalls
+  become: true
+
+  handlers:
+    - name: Ensure sshd has been restarted
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
+
+  tasks:
+    - name: Ensure sudo requiretty setting is disabled for ANSIBLE_PIPELINING
+      ansible.builtin.lineinfile:
+        path: /usr/local/etc/sudoers.d/requiretty.conf
+        line: Defaults:{{ ansible_user }} !requiretty
+        state: present
+        create: true
+        mode: 0440
+      notify: Ensure sshd has been restarted
