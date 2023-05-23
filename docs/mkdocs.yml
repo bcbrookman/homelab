@@ -32,4 +32,5 @@ markdown_extensions:
       absolute: false
       base_path: "/"
       relative_path: /docs/content
-  - pymdownx.snippets
+  - pymdownx.snippets:
+      restrict_base_path: false
