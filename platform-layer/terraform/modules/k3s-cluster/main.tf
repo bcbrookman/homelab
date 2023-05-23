@@ -62,20 +62,22 @@ locals {
 }
 
 resource "proxmox_vm_qemu" "k3s-vm" {
-  count       = var.nodes
-  ciuser      = var.user
-  name        = "${var.name_prefix}0${count.index + 1}"
-  target_node = "pve0${count.index % var.nodes + 1}"
-  clone       = "${local.clone_vm_prefix}-pve0${count.index % var.nodes + 1}"
-  full_clone  = true
-  agent       = 1
-  os_type     = "cloud-init"
-  cores       = var.cores
-  sockets     = 1
-  cpu         = "host"
-  memory      = var.memory
-  scsihw      = "virtio-scsi-pci"
-  onboot      = true
+  count            = var.nodes
+  ciuser           = var.user
+  name             = "${var.name_prefix}0${count.index + 1}"
+  target_node      = "pve0${count.index % var.nodes + 1}"
+  clone            = "${local.clone_vm_prefix}-pve0${count.index % var.nodes + 1}"
+  full_clone       = true
+  agent            = 1
+  os_type          = "cloud-init"
+  qemu_os          = "l26"
+  cores            = var.cores
+  sockets          = 1
+  cpu              = "host"
+  memory           = var.memory
+  scsihw           = "virtio-scsi-pci"
+  onboot           = true
+  automatic_reboot = false
   disk {
     size    = var.disk_size
     type    = "scsi"
@@ -99,6 +101,8 @@ resource "proxmox_vm_qemu" "k3s-vm" {
   lifecycle {
     prevent_destroy = true
     ignore_changes = [
+      clone,
+      full_clone,
       network,
     ]
   }
