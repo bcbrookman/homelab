@@ -1,0 +1,22 @@
+---
+name: Flux Image Update Auto-PR
+
+on:  # yamllint disable-line rule:truthy
+  create:
+    branches:
+      - fluxcdbot/updates/**
+
+permissions:
+  pull-requests: write
+
+jobs:
+  pull-request:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        name: checkout
+
+      - name: pull-request
+        run: |
+          gh pr create --base "main" --fill
