@@ -1,0 +1,45 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: uptime-kuma
+spec:
+  image: louislam/uptime-kuma
+  interval: 1h0m0s
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: uptime-kuma
+spec:
+  filterTags:
+    pattern: ^\d+\.\d+\.\d+-alpine$
+  imageRepositoryRef:
+    name: uptime-kuma
+  policy:
+    semver:
+      range: '>=1.0.0-x <1000.0.0-x'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: uptime-kuma
+spec:
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: Bump {{ (index .Updated.Images 0).Repository }} to {{ (index .Updated.Images 0).Identifier }}
+    push:
+      branch: fluxcdbot/updates/uptime-kuma
+  interval: 10m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  update:
+    path: software-layer/k8s/apps/base/uptime-kuma/
+    strategy: Setters
