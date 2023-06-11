@@ -28,7 +28,7 @@ spec:
               value: '1001'
             - name: TZ
               value: UTC
-          image: lscr.io/linuxserver/unifi-controller:7.3.83-ls187
+          image: lscr.io/linuxserver/unifi-controller:7.3.83-ls187  # {"$imagepolicy": "flux-system:unifi"}
           livenessProbe:
             failureThreshold: 6
             httpGet:
