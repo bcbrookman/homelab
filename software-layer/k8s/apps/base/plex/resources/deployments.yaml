@@ -25,7 +25,7 @@ spec:
               value: '1001'
             - name: TZ
               value: UTC
-          image: lscr.io/linuxserver/plex:1.31.2.6810-a607d384f-ls157
+          image: lscr.io/linuxserver/plex:1.31.2.6810-a607d384f-ls157  # {"$imagepolicy": "flux-system:plex"}
           livenessProbe:
             failureThreshold: 6
             httpGet:
