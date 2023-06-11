@@ -1,25 +1,24 @@
 ---
-name: Flux Image Update Auto-PR
+name: Flux Auto-PR
 
 on:  # yamllint disable-line rule:truthy
   create:
-    branches:
-      - fluxcdbot/updates/**
 
 permissions:
   pull-requests: write
 
 jobs:
-  pull-request:
+  Auto-PR:
+    if: ${{ startsWith(github.head_ref, 'fluxcdbot/') }}
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-        name: checkout
+      - name: Checkout repo at current context
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: pull-request
+      - name: Create new Pull Request
         run: |
           gh pr create --base "main" --fill
         env:
