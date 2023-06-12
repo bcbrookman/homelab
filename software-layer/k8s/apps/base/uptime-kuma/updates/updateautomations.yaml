@@ -2,29 +2,28 @@
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageRepository
 metadata:
-  name: pi-hole
+  name: uptime-kuma
 spec:
-  image: pihole/pihole
+  image: louislam/uptime-kuma
   interval: 1h0m0s
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
 metadata:
-  name: pi-hole
+  name: uptime-kuma
 spec:
   filterTags:
-    extract: $YYYY.$MM.$RELEASE
-    pattern: ^(?P<YYYY>\d{4})\.(?P<MM>\d{2})\.(?P<RELEASE>\d+)$
+    pattern: ^\d+\.\d+\.\d+-alpine$
   imageRepositoryRef:
-    name: pi-hole
+    name: uptime-kuma
   policy:
-    alphabetical:
-      order: asc
+    semver:
+      range: '>=1.0.0-x <1000.0.0-x'
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImageUpdateAutomation
 metadata:
-  name: pi-hole
+  name: uptime-kuma
 spec:
   git:
     checkout:
@@ -36,11 +35,11 @@ spec:
         name: fluxcdbot
       messageTemplate: Bump {{ (index .Updated.Images 0).Repository }} to {{ (index .Updated.Images 0).Identifier }}
     push:
-      branch: fluxcdbot/updates/pi-hole
+      branch: fluxcdbot/updates/uptime-kuma
   interval: 10m0s
   sourceRef:
     kind: GitRepository
     name: flux-system
   update:
-    path: software-layer/k8s/apps/base/pi-hole/
+    path: software-layer/k8s/apps/base/uptime-kuma/
     strategy: Setters

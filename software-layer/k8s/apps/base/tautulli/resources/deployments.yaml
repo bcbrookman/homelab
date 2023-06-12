@@ -3,19 +3,19 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: uptime-kuma
-  name: uptime-kuma
+    app: tautulli
+  name: tautulli
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: uptime-kuma
+      app: tautulli
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: uptime-kuma
+        app: tautulli
     spec:
       containers:
         - env:
@@ -25,37 +25,37 @@ spec:
               value: '1001'
             - name: TZ
               value: UTC
-          image: louislam/uptime-kuma:1.21.2-alpine
+          image: lscr.io/linuxserver/tautulli:v2.12.2-ls74  # {"$imagepolicy": "flux-system:tautulli"}
           livenessProbe:
             failureThreshold: 6
             httpGet:
-              path: /
-              port: 3001
+              path: /status
+              port: 8181
             initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
-          name: uptime-kuma
+          name: tautulli
           ports:
-            - containerPort: 3001
+            - containerPort: 8181
           readinessProbe:
             failureThreshold: 3
             httpGet:
-              path: /
-              port: 3001
+              path: /status
+              port: 8181
             initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 5
           resources:
             limits:
-              memory: 128Mi
+              memory: 200Mi
             requests:
               cpu: 100m
           securityContext:
-            allowPrivilegeEscalation: true
+            allowPrivilegeEscalation: false
             privileged: false
           volumeMounts:
-            - mountPath: /app/data
-              name: uptime-kuma-data
+            - mountPath: /config
+              name: tautulli-config
       dnsConfig:
         options:
           - name: ndots
@@ -64,6 +64,6 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       volumes:
-        - name: uptime-kuma-data
+        - name: tautulli-config
           persistentVolumeClaim:
-            claimName: uptime-kuma-data
+            claimName: tautulli-config

@@ -3,19 +3,19 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: plex
-  name: plex
+    app: uptime-kuma
+  name: uptime-kuma
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: plex
+      app: uptime-kuma
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: plex
+        app: uptime-kuma
     spec:
       containers:
         - env:
@@ -25,41 +25,37 @@ spec:
               value: '1001'
             - name: TZ
               value: UTC
-          image: lscr.io/linuxserver/plex:1.31.2.6810-a607d384f-ls157
+          image: louislam/uptime-kuma:1.21.2-alpine  # {"$imagepolicy": "flux-system:unifi"}
           livenessProbe:
             failureThreshold: 6
             httpGet:
-              path: /identity
-              port: 32400
+              path: /
+              port: 3001
             initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
-          name: plex
+          name: uptime-kuma
           ports:
-            - containerPort: 32400
+            - containerPort: 3001
           readinessProbe:
             failureThreshold: 3
             httpGet:
-              path: /identity
-              port: 32400
+              path: /
+              port: 3001
             initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 5
           resources:
             limits:
-              memory: 4Gi
+              memory: 128Mi
             requests:
-              cpu: '2'
+              cpu: 100m
           securityContext:
-            allowPrivilegeEscalation: false
+            allowPrivilegeEscalation: true
             privileged: false
           volumeMounts:
-            - mountPath: /config
-              name: plex-config
-            - mountPath: /media
-              name: plex-media
-            - mountPath: /transcodes
-              name: plex-transcodes
+            - mountPath: /app/data
+              name: uptime-kuma-data
       dnsConfig:
         options:
           - name: ndots
@@ -68,14 +64,6 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       volumes:
-        - name: plex-config
+        - name: uptime-kuma-data
           persistentVolumeClaim:
-            claimName: plex-config
-        - name: plex-media
-          nfs:
-            path: /volume1/plex
-            readOnly: false
-            server: nas.home.bcbrookman.com
-        - emptyDir:
-            medium: Memory
-          name: plex-transcodes
+            claimName: uptime-kuma-data

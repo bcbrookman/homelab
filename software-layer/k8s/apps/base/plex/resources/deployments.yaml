@@ -3,19 +3,19 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: tautulli
-  name: tautulli
+    app: plex
+  name: plex
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: tautulli
+      app: plex
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app: tautulli
+        app: plex
     spec:
       containers:
         - env:
@@ -25,37 +25,41 @@ spec:
               value: '1001'
             - name: TZ
               value: UTC
-          image: lscr.io/linuxserver/tautulli:v2.12.2-ls74
+          image: lscr.io/linuxserver/plex:1.31.2.6810-a607d384f-ls157  # {"$imagepolicy": "flux-system:plex"}
           livenessProbe:
             failureThreshold: 6
             httpGet:
-              path: /status
-              port: 8181
+              path: /identity
+              port: 32400
             initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
-          name: tautulli
+          name: plex
           ports:
-            - containerPort: 8181
+            - containerPort: 32400
           readinessProbe:
             failureThreshold: 3
             httpGet:
-              path: /status
-              port: 8181
+              path: /identity
+              port: 32400
             initialDelaySeconds: 5
             periodSeconds: 10
             timeoutSeconds: 5
           resources:
             limits:
-              memory: 200Mi
+              memory: 4Gi
             requests:
-              cpu: 100m
+              cpu: '2'
           securityContext:
             allowPrivilegeEscalation: false
             privileged: false
           volumeMounts:
             - mountPath: /config
-              name: tautulli-config
+              name: plex-config
+            - mountPath: /media
+              name: plex-media
+            - mountPath: /transcodes
+              name: plex-transcodes
       dnsConfig:
         options:
           - name: ndots
@@ -64,6 +68,14 @@ spec:
         seccompProfile:
           type: RuntimeDefault
       volumes:
-        - name: tautulli-config
+        - name: plex-config
           persistentVolumeClaim:
-            claimName: tautulli-config
+            claimName: plex-config
+        - name: plex-media
+          nfs:
+            path: /volume1/plex
+            readOnly: false
+            server: nas.home.bcbrookman.com
+        - emptyDir:
+            medium: Memory
+          name: plex-transcodes
