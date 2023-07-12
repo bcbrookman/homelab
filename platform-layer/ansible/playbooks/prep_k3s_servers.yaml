@@ -29,17 +29,14 @@
         name: ip6tables
         path: /usr/sbin/ip6tables-legacy
 
-    - name: Check if swap is active on Debian nodes
-      ansible.builtin.shell: set -o pipefail && cat /proc/swaps | grep -e Filename
+    - name: Turn off swap on Debian nodes
+      ansible.builtin.shell: set -o pipefail && cat /proc/swaps | grep -v Filename && swapoff --all
       args:
         executable: /bin/bash
-      register: swapcheck
-      changed_when: false
+      register: deb_swapoff
+      changed_when: deb_swapoff.rc == 0
+      failed_when: deb_swapoff.rc > 1
       when: ansible_distribution == "Debian"
-
-    - name: If active, turn off swap on Debian nodes
-      ansible.builtin.command: swapoff --all
-      when: '"dev" in swapcheck.stdout'
 
     - name: Disable swap mounts in fstab on Debian nodes
       ansible.builtin.replace:
@@ -49,11 +46,12 @@
       when: ansible_distribution == "Debian"
 
     - name: Turn off swap on Raspbian nodes
-      ansible.builtin.command: dphys-swapfile swapoff
-      when: ansible_distribution == "Raspbian"
-
-    - name: Remove the swapfile on Raspbian nodes
-      ansible.builtin.command: dphys-swapfile uninstall
+      ansible.builtin.shell: set -o pipefail && cat /proc/swaps | grep -v Filename && dphys-swapfile swapoff && dphys-swapfile uninstall
+      args:
+        executable: /bin/bash
+      register: rpi_swapoff
+      changed_when: rpi_swapoff.rc == 0
+      failed_when: rpi_swapoff.rc > 1
       when: ansible_distribution == "Raspbian"
 
     - name: Disable the dphys-swapfile service on Raspbian nodes
