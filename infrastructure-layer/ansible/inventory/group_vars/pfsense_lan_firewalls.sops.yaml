@@ -1,5 +1,5 @@
 ansible_user: ENC[AES256_GCM,data:p5NhGNjmRw==,iv:UPd0rTFrR6tYTQVgV3E4TBzfXX2P7IOlUoFgGnU6Xu0=,tag:v3IsoA/Y9+o+fKtbu5AvhQ==,type:str]
-ansible_python_interpreter: /usr/local/bin/python3.8
+ansible_python_interpreter: /usr/local/bin/python3.11
 sops:
     kms: []
     gcp_kms: []
@@ -15,8 +15,8 @@ sops:
             US9HY2dsVkFhNHRNVTBncHBWMDBPWWsKwl6b+PmBWUHnB9I54AKg27ztDZCvK8Px
             P2xhIA/5oSAhgYOgHmm0LeFS2B386ugoawywXnKzLX3fN7xWyv4wNQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-05-03T16:32:23Z"
-    mac: ENC[AES256_GCM,data:CHqAk8k3jSXLHQpLHsgy4q+riDv2nw3/O1AxGmFcfdkOlc3idYPHB3gFsLPJP1SlkMV7sObnV7T4qhhFn6Z+CyctMq7ZHXAxtn2XuSVKj3FO+kRF052iN7I+W37JENnK/s4coth65q8c/bf6SLAw8bfY7Uqcm/B+jByItaTJ1q0=,iv:0mnkmMCTqqfhih5nlTOG6Q1BkHkvsRCOUWuXBf6Wuss=,tag:Aj11J6o0vWASnCTjDQFzMg==,type:str]
+    lastmodified: "2023-07-12T04:19:05Z"
+    mac: ENC[AES256_GCM,data:7KHq4PtVjXa1yMUid1ZKafTTReFL9ja/y9x5Pneb+fzP7oKK/z0D0+eemmw1yGu4C2oBvzzZPLHYsremZzi9stbbYidpsFCMjJv/IZTmKano2yVuIVZox34BcPMegIyJAo/+XqRF/aWZw+VgwM5JDlhydccBdx3Ez2S7xGPOXc8=,iv:aIjhJv5pEO6Pz935NE4RUwCpPeMcU74YMTtFGSmQegU=,tag:14E1YIfeRoLQi8JPbajGkg==,type:str]
     pgp: []
     encrypted_regex: (?i)user|pass|secret|key|token|^data$|^stringData$
     version: 3.7.3
