@@ -3,13 +3,7 @@ offline: true
 exclude_paths:
   - .cache/
   - .github/
-  - ${HOME}/.cache/
-  - ${HOME}/.ansible/roles/
-  - ${HOME}/.ansible/collections/
-  - ./infrastructure-layer/ansible/roles/
-  - ./platform-layer/ansible/k3s-ansible/
-  - ./platform-layer/ansible/roles/
-  - ./software-layer/ansible/roles/
+  - k3s-ansible/
 
 warn_list:
   - package-latest
