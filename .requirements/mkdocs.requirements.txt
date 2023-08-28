@@ -1,4 +1,4 @@
 # Python requirements file
 mkdocs==1.5.2
-mkdocs-material==9.1.19
+mkdocs-material==9.2.5
 pymdown-extensions==10.1
