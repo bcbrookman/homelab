@@ -2,7 +2,7 @@
 # Groups of hosts
 k3s_vms:
   hosts:
-    k3s-staging-vm[01:05]:
+    k3s-staging-vm[01:03]:
 
 # Groups of groups
 all_servers:
