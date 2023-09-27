@@ -10,7 +10,7 @@ Compute resources are provided using the following hardware:
 
 |Qty.|Model|CPU|Memory|Storage|Usage|
 |----|-----|---|------|-------|-----|
-|5|Lenovo ThinkCentre M910q|Intel i7-7700T 4 Cores, 8 Threads|16GB DDR4|512GB SSD|Proxmox VE|
+|3|Lenovo ThinkCentre M910q|Intel i7-7700T 4 Cores, 8 Threads|16GB DDR4|512GB SSD|Proxmox VE|
 
 ## Storage
 

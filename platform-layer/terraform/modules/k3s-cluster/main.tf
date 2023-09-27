@@ -23,7 +23,7 @@ variable "memory" {
 
 variable "nodes" {
   type    = number
-  default = 5
+  default = 3
 }
 
 variable "name_prefix" {
