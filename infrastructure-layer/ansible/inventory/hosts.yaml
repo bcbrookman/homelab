@@ -1,37 +1,22 @@
 ---
 # Groups of hosts
-pfsense_wan_firewalls:
-  hosts:
-    pfsense:
-pfsense_lan_firewalls:
+pfsense_firewalls:
   hosts:
     pfsense[01:02]:
 proxmox_servers:
   hosts:
-    pve[01:05]:
-synology_nas:
-  hosts:
-    nas:
+    pve[01:03]:
 unifi_aps:
   hosts:
     ubnt-ap[01:02]:
 unifi_switches:
   hosts:
-    ubnt-sw[01:05]:
+    ubnt-sw[01:03]:
 
 # Groups of groups
-pfsense_firewalls:
-  children:
-    pfsense_wan_firewalls:
-    pfsense_lan_firewalls:
 all_servers:
   children:
     proxmox_servers:
-network_gear:
-  children:
-    pfsense_firewalls:
-    unifi_switches:
-    unifi_aps:
 unifi_gear:
   children:
     unifi_switches:

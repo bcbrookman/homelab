@@ -1,5 +1,5 @@
 ---
-- name: Install/upgrade base pfSense packages
+- name: Install/upgrade pfSense packages
   hosts: pfsense_firewalls
   become: true
 
@@ -9,16 +9,6 @@
         name:
           - pfSense-pkg-Service_Watchdog
           - pfSense-pkg-sudo
-        state: latest
-
-- name: Install/upgrade LAN pfSense packages
-  hosts: pfsense_lan_firewalls
-  become: true
-
-  tasks:
-    - name: Ensure selected packages are installed and current
-      ansible.builtin.package:
-        name:
           - pfSense-pkg-acme
           - pfSense-pkg-Avahi
           - pfSense-pkg-freeradius3
