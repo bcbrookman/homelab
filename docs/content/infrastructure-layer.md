@@ -10,7 +10,7 @@ Compute resources are provided using the following hardware:
 
 |Qty.|Model|CPU|Memory|Storage|Usage|
 |----|-----|---|------|-------|-----|
-|3|Lenovo ThinkCentre M910q|Intel i7-7700T 4 Cores, 8 Threads|16GB DDR4|512GB SSD|Proxmox VE|
+|3|Lenovo ThinkCentre M910q|Intel i7-7700T|16GB|512GB|Proxmox VE|
 
 ## Storage
 
@@ -56,7 +56,8 @@ Physically, the network topology is fairly small using only a handful of desktop
 
 |Qty.|Model|CPU|Memory|Storage|Usage|
 |----|-----|---|------|-------|-----|
-|1|Netgate SG-3100|ARM v7 Cortex-A9 2 Cores @ 1.6GHz|2GB DDR4L|32 GB M.2 SATA SSD|Firewall/Router|
+|1|Mikrotik hEX RB750Gr3|MMIPS MT7621A|256MB|16MB|WAN Router|
+|2|HP T740 Thin Client|AMD Ryzen V1756B|32GB|500GB|Firewall|
 |1|UniFi FlexHD|---|---|---|Wi-Fi|
 |1|UniFi AP U6 Extender|---|---|---|Wi-Fi|
 |3|UniFi USW-8|---|---|---|Switching|
@@ -65,7 +66,7 @@ The network is designed with redundant network paths wherever possible, but much
 
 ![physical network topology diagram](assets/homelab-physical-network-topology.svg)
 
-Notably missing from the physical topology diagram above are the DMZ firewalls. These firewalls are virtualized and run on separate Proxmox VE nodes in a high-availability configuration.
+The WAN router is only used to allow for redundant pfSense firewalls with only one dynamic public IP address. Outbound traffic is source NATed to the current WAN interface address, and all inbound traffic is destination NATed to the floating WAN CARP virtual address. In many consumer routers, this would be similar to setting the WAN CARP virtual address as the DMZ host.
 
 ## WLAN
 
