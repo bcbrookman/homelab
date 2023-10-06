@@ -14,10 +14,8 @@ tasks:
     desc: Lint all software-layer files
     cmds:
       - task: lint:yaml
-      - cat k8s/clusters/staging/*.y*ml k8s/clusters/production/*.y*ml | $KUBECONFORM
-      - $KUSTOMIZE build /k8s/infrastructure/staging | $KUBECONFORM
+      - cat k8s/clusters/production/*.y*ml | $KUBECONFORM
       - $KUSTOMIZE build /k8s/infrastructure/production | $KUBECONFORM
-      - $KUSTOMIZE build /k8s/apps/staging | $KUBECONFORM
       - $KUSTOMIZE build /k8s/apps/production | $KUBECONFORM
     vars:
       WORKING_DIR:

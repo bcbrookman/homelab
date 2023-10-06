@@ -8,14 +8,3 @@ module "k3s-production" {
   sshkeys              = data.sops_file.tfvars.data["sshkeys"]
   user                 = "brian"
 }
-
-module "k3s-staging" {
-  source               = "./modules/k3s-cluster"
-  name_prefix          = "k3s-staging-vm"
-  net_cidr_prefix      = "192.168.20.0/24"
-  net_gateway_addr     = "192.168.20.1"
-  net_starting_hostnum = 141
-  net_vlan             = 20
-  sshkeys              = data.sops_file.tfvars.data["sshkeys"]
-  user                 = "brian"
-}
