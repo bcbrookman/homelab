@@ -22,7 +22,7 @@ spec:
               value: https://wizarr.bcbrookman.com
             - name: TZ
               value: UTC
-          image: ghcr.io/wizarrrr/wizarr:3.0.1 # {"$imagepolicy": "flux-system:wizarr"}
+          image: ghcr.io/wizarrrr/wizarr:3.4.1 # {"$imagepolicy": "flux-system:wizarr"}
           name: wizarr
           ports:
             - containerPort: 5690
