@@ -55,6 +55,8 @@ spec:
           volumeMounts:
             - mountPath: /config
               name: plex-config
+            - mountPath: /config/Library/Application Support/Plex Media Server/Cache
+              name: plex-config-cache
             - mountPath: /media
               name: plex-media
             - mountPath: /transcodes
@@ -78,3 +80,6 @@ spec:
         - emptyDir:
             medium: Memory
           name: plex-transcodes
+        - emptyDir:
+            sizeLimit: 1Gi
+          name: plex-config-cache
