@@ -89,7 +89,7 @@ tasks:
     cmds:
       - docker exec -it homelab-cicd bash
 
-  docker-test:pull: docker pull summerwind/actions-runner:latest
+  docker-test:pull: docker pull summerwind/actions-runner-dind:latest
 
   docker-test:run: docker run --name homelab-cicd
                    --detach -it --env-file .env.staging
@@ -110,10 +110,14 @@ tasks:
   docker-test:setup-python:
     cmds:
       - task: docker-test:apt-update
-      - docker exec homelab-cicd sudo apt install -y python3.9
-      - docker exec homelab-cicd sudo ln -sf /usr/bin/python3.9 /usr/bin/python3
+      - docker exec homelab-cicd sudo add-apt-repository -y ppa:deadsnakes/ppa
+      - docker exec homelab-cicd sudo apt install -y python3.12 python3.12-distutils
+      - docker exec homelab-cicd sudo ln -sf /usr/bin/python3.12 /usr/bin/python3
+      - docker exec homelab-cicd wget https://bootstrap.pypa.io/get-pip.py
+      - docker exec homelab-cicd sudo python3 get-pip.py
     status:
-      - docker exec homelab-cicd python3 --version | grep 3.9
+      - docker exec homelab-cicd python3 --version | grep -i 'Python 3.12'
+      - docker exec homelab-cicd pip3 --version | grep -i 'Python 3.12'
 
   docker-test:setup-task:
     cmds:
