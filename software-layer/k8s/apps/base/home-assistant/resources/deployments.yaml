@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: home-assistant
+  name: home-assistant
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: home-assistant
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: home-assistant
+    spec:
+      containers:
+        - env:
+            - name: PUID
+              value: '1001'
+            - name: PGID
+              value: '1001'
+            - name: TZ
+              value: UTC
+          image: lscr.io/linuxserver/homeassistant:2024.1.6 # {"$imagepolicy": "flux-system:home-assistant"}
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /
+              port: 8123
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+          name: home-assistant
+          ports:
+            - containerPort: 8123
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /
+              port: 8123
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+          resources:
+            limits:
+              memory: 4Gi
+            requests:
+              cpu: '2'
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+          volumeMounts:
+            - mountPath: /config
+              name: home-assistant-config
+      dnsConfig:
+        options:
+          - name: ndots
+            value: '1'
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      volumes:
+        - name: home-assistant-config
+          persistentVolumeClaim:
+            claimName: home-assistant-config

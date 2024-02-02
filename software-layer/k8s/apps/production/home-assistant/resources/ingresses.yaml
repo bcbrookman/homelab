@@ -1,0 +1,29 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app: home-assistant
+  name: home-assistant
+spec:
+  rules:
+    - host: home-assistant.local.bcbrookman.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: home-assistant
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
+    - host: home-assistant.bcbrookman.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: home-assistant
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
