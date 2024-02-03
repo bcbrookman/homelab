@@ -5,6 +5,7 @@ module "k3s-production" {
   net_gateway_addr     = "192.168.20.1"
   net_starting_hostnum = 131
   net_vlan             = 20
+  disk_size            = "100G"
   sshkeys              = data.sops_file.tfvars.data["sshkeys"]
   user                 = "brian"
 }
