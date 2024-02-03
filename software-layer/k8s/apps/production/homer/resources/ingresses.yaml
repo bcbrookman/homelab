@@ -1,0 +1,19 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app: homer
+  name: homer
+spec:
+  rules:
+    - host: homer.local.bcbrookman.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: homer
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
