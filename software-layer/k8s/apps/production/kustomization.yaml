@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./github-arc/
   - ./home-assistant/
+  - ./homer/
   - ./kube-prometheus-stack/
   - ./pi-hole/
   - ./plex/
