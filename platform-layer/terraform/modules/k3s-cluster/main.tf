@@ -58,7 +58,7 @@ variable "user" {
 
 locals {
   net_cidr_mask   = split("/", var.net_cidr_prefix)[1]
-  clone_vm_prefix = "debian-10-genericcloud-amd64-20211011-792"
+  clone_vm_prefix = "debian12-k3s-20240418T0858"
 }
 
 resource "proxmox_vm_qemu" "k3s-vm" {
