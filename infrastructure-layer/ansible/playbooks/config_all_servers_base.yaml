@@ -28,11 +28,11 @@
     - name: Make sure rsyslog and logrotate are installed
       ansible.builtin.apt:
         update_cache: true
-        package: 
+        package:
           - rsyslog
           - logrotate
         state: present
-  
+
     - name: Make sure rsyslog is configured
       ansible.builtin.lineinfile:
         path: /etc/rsyslog.conf
@@ -52,7 +52,7 @@
         state: started
         enabled: true
 
-    - name: Delete systemd-journald directory (if present) 
+    - name: Delete systemd-journald directory (if present)
       ansible.builtin.file:
         path: /var/log/journal
         state: absent
