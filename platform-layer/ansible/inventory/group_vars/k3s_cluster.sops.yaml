@@ -4,8 +4,8 @@ extra_agent_args: null
 extra_server_args: --disable servicelb --disable local-storage --tls-san 192.168.0.1
 firewall_enabled_at_boot: false
 firewall_state: stopped
-k3s_token: ENC[AES256_GCM,data:ep25OT6KRpsS4Pf7xBhdHeyUIBjGI0Azwn4nRqFCAjJ/AhZPtusOTaubVA1QMXugQW0=,iv:PLpNOJty3TtqU8lVDTURLTe30k1NIXH5WsJhHqdqmZo=,tag:4JipFz2EtemOkG6jEeBMiA==,type:str]
-k3s_version: v1.28.2+k3s1
+k3s_token: ENC[AES256_GCM,data:lS49OkLmzidn0g7o7AGBoCln466IhGLnYrVeUDYGB2kmcVkIeEdbtCysF+r0QLlqXX8=,iv:nT+CzR1Wo4JXtOuSJTv8u4pJtd5IoYJXhbtLjBQaA08=,tag:xnsal4EsDax5n++8+YOobw==,type:str]
+k3s_version: v1.29.3+k3s1
 systemd_dir: /etc/systemd/system
 sops:
     kms: []
@@ -16,14 +16,14 @@ sops:
         - recipient: age1azf8jz2rq6upyktxe0ntqnlnpwlsmuspgqy3ak3rh609vqk2recqdfznyk
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA3aGRXOEI3VjJ0a3pxQTVy
-            YW5kY2RPZzZyZm1XaFhhV2xJMlhZK3hpeGxNCnZmM2tVZ1J0dVhhS1R5RS9VbER2
-            RElaMXZ2N044Ui9tZWdLeXU4WUQyZzgKLS0tIEhWa0lrVUpKQzBkRXArZSt2TWRl
-            R2d3Ym1LU0dxaVNPQ2dWTWw1ZjFvZ2cKtnbry2f39e+8I8JTSaKIgA65PF/6H039
-            ruY2AB7qFHp3RJImzkGrayz+Z4wjzCB67k8iTD+vm4lkmN2lifkffw==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBGVXdWL0hDOHcxN3JjOVl1
+            NTBzRTVtNkR2azlZalVWTE5pYnNHMVlJSWpVCjhGT09aT3EyZFVnc001WGZ3Um5P
+            bXdrME1URHNDMUlRQUF6SmQrV3YyWDAKLS0tIC9WTDV4T0ZmQ1VuTFZmSHJYbXh0
+            QkFBMmgxd2tDZUw0U1JTL2Q4NFVsbm8KPaRHRVnAspKHEXiUcoozmp4XUwc1vNmH
+            hA77N9fLLdm0Lhri2D5929debva0wl5KF2iDPqw707Jhydndmjs61g==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-10-04T16:14:16Z"
-    mac: ENC[AES256_GCM,data:YWiaKq4J2bt36pTotjeft++yepP36xAUm+AFw3P9d3CRplozM/4djETEu+tq2glI/Bo2WVS+P1pzX9Ceo6lJEsBkzwYc5lr3liaA3W7QByisNVqFgJajM8f7y2yYZoHPXBaaqDF7yMVHAdOidHITpJYUu0LzGRS3sU0rlsXG93E=,iv:NG8tvTHMMgsr0qN9G8ZTIMGbRZWHqdJBDmckc4wPrpw=,tag:XkC19nKDuqEFSGUBpMX5EA==,type:str]
+    lastmodified: "2024-04-19T23:45:32Z"
+    mac: ENC[AES256_GCM,data:vI2Tf77cadWoCTJo3mrbad21bMlC9RMEY9QeESWihanJC2qmL2KCaraSwt2TNedNhoamsf5P85WdW+45pfCWV2BoTd6TZZ2+yQrbs8CyDmHAAlNjh1fHP6r5XCGarB0MfQc5M3OeY4a5jd/Deqs4n5DapHtnMTUTBmgGGfgpHK0=,iv:EpEdtQwtBNHpnSn7T6GRCaAaO/j2rC6LxsfO2kutiRg=,tag:muCJHPECsqg4wZWbWC5WCg==,type:str]
     pgp: []
     encrypted_regex: (?i)user|pass|secret|key|token|^data$|^stringData$
     version: 3.7.3
