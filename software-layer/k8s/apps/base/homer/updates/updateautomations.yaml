@@ -5,7 +5,7 @@ metadata:
   name: homer
 spec:
   image: b4bz/homer
-  interval: 1h0m0s
+  interval: 4h
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
@@ -34,7 +34,7 @@ spec:
       messageTemplate: Bump {{ (index .Updated.Images 0).Repository }} to {{ (index .Updated.Images 0).Identifier }}
     push:
       branch: fluxcdbot/updates/homer
-  interval: 10m0s
+  interval: 24h
   sourceRef:
     kind: GitRepository
     name: flux-system

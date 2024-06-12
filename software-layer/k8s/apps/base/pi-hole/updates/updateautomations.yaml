@@ -5,7 +5,7 @@ metadata:
   name: pi-hole
 spec:
   image: pihole/pihole
-  interval: 1h0m0s
+  interval: 4h
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
@@ -42,7 +42,7 @@ spec:
         {{ end -}}
     push:
       branch: fluxcdbot/updates/pi-hole
-  interval: 10m0s
+  interval: 24h
   sourceRef:
     kind: GitRepository
     name: flux-system

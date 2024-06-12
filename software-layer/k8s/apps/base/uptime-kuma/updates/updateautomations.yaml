@@ -5,7 +5,7 @@ metadata:
   name: uptime-kuma
 spec:
   image: louislam/uptime-kuma
-  interval: 1h0m0s
+  interval: 4h
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
@@ -41,7 +41,7 @@ spec:
         {{ end -}}
     push:
       branch: fluxcdbot/updates/uptime-kuma
-  interval: 10m0s
+  interval: 24h
   sourceRef:
     kind: GitRepository
     name: flux-system

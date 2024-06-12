@@ -5,7 +5,7 @@ metadata:
   name: unifi
 spec:
   image: lscr.io/linuxserver/unifi-controller
-  interval: 1h0m0s
+  interval: 4h
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta1
 kind: ImagePolicy
@@ -39,7 +39,7 @@ spec:
         {{ end -}}
     push:
       branch: fluxcdbot/updates/unifi
-  interval: 10m0s
+  interval: 24h
   sourceRef:
     kind: GitRepository
     name: flux-system
