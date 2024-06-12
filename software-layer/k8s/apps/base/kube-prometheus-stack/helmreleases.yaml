@@ -12,5 +12,5 @@ spec:
         name: prometheus-community
         namespace: flux-system
       version: '44'
-  interval: 60m
+  interval: 24h
   releaseName: kube-prometheus-stack
