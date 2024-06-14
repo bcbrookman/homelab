@@ -3,12 +3,15 @@
 k3s_vms:
   hosts:
     k3s-prod-vm[01:03]:
+pgsql_cts:
+  hosts:
+    pgsql-ct01:
 
 # Groups of groups
 all_servers:
   children:
     k3s_vms:
-    other_servers:
+    pgsql_cts:
 master:
   children:
     k3s_vms:

@@ -51,11 +51,6 @@ variable "sshkeys" {
   sensitive = true
 }
 
-variable "initial_root_pw" {
-  type      = string
-  sensitive = true
-}
-
 locals {
   net_cidr_mask = split("/", var.net_cidr_prefix)[1]
 }
@@ -69,7 +64,6 @@ resource "proxmox_lxc" "pgsql-ct" {
   hostname        = "${var.name_prefix}0${count.index + 1}"
   ostemplate      = "nas:vztmpl/debian-12-turnkey-postgresql_18.0-1_amd64.tar.gz"
   onboot          = true
-  password        = var.initial_root_pw
   unprivileged    = true
   ssh_public_keys = var.sshkeys
   rootfs {
@@ -84,6 +78,6 @@ resource "proxmox_lxc" "pgsql-ct" {
     gw     = var.net_gateway_addr
   }
   lifecycle {
-    prevent_destroy = true
+     prevent_destroy = true
   }
 }
