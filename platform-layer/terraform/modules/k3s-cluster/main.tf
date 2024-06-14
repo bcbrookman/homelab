@@ -78,10 +78,23 @@ resource "proxmox_vm_qemu" "k3s-vm" {
   scsihw           = "virtio-scsi-pci"
   onboot           = true
   automatic_reboot = false
-  disk {
-    size    = var.disk_size
-    type    = "scsi"
-    storage = "local-lvm"
+  disks {
+    ide {
+      ide2 {
+        cloudinit {
+          storage = "local-lvm"
+        }
+      }
+    }
+    scsi {
+      scsi0 {
+        disk {
+          size    = var.disk_size
+          storage = "local-lvm"
+          replicate = true
+        }
+      }
+    }
   }
   network {
     model  = "virtio"
