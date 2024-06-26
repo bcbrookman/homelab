@@ -46,9 +46,10 @@ spec:
             timeoutSeconds: 5
           resources:
             limits:
-              memory: 200Mi
+              memory: &memory 135Mi
             requests:
-              cpu: 100m
+              cpu: 10m
+              memory: *memory
           securityContext:
             allowPrivilegeEscalation: false
             privileged: false
