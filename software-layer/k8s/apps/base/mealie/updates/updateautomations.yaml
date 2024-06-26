@@ -1,0 +1,48 @@
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageRepository
+metadata:
+  name: mealie
+spec:
+  image: ghcr.io/mealie-recipes/mealie
+  interval: 4h
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImagePolicy
+metadata:
+  name: mealie
+spec:
+  imageRepositoryRef:
+    name: mealie
+  policy:
+    semver:
+      range: '>=1.0.0 <1000.0.0'
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta1
+kind: ImageUpdateAutomation
+metadata:
+  name: mealie
+spec:
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxcdbot@users.noreply.github.com
+        name: fluxcdbot
+      messageTemplate: |
+        {{ if .Updated.Images -}}
+          Bump {{ (index .Updated.Images 0).Repository }} to {{ (index .Updated.Images 0).Identifier }}
+        {{ else -}}
+          Unspecified change by {{ .AutomationObject }} ImageUpdateAutomation
+        {{ end -}}
+    push:
+      branch: fluxcdbot/updates/mealie
+  interval: 24h
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  update:
+    path: software-layer/k8s/apps/base/mealie/
+    strategy: Setters

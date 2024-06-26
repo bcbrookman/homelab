@@ -1,0 +1,67 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mealie
+  name: mealie
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mealie
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mealie
+    spec:
+      containers:
+        - name: mealie
+          envFrom:
+            - configMapRef:
+                name: mealie
+            - secretRef:
+                name: mealie
+          image: ghcr.io/mealie-recipes/mealie:v1.8.0 # {"$imagepolicy": "flux-system:mealie"}
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /api/app/about
+              port: 9000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+          ports:
+            - containerPort: 32400
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/app/about
+              port: 9000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+          resources:
+            limits:
+              memory: 1Gi
+            requests:
+              cpu: '100m'
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+          volumeMounts:
+            - mountPath: /app/data/
+              name: mealie-data
+      dnsConfig:
+        options:
+          - name: ndots
+            value: '1'
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      volumes:
+        - name: mealie-data
+          persistentVolumeClaim:
+            claimName: mealie-data

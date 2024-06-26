@@ -1,0 +1,29 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app: mealie
+  name: mealie
+spec:
+  rules:
+    - host: mealie.k8s.home.bcbrookman.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: mealie
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
+    - host: mealie.bcbrookman.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: mealie
+                port:
+                  name: http
+            path: /
+            pathType: Prefix
