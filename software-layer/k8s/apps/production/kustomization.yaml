@@ -6,6 +6,7 @@ resources:
   - ./home-assistant/
   - ./homer/
   - ./kube-prometheus-stack/
+  - ./mealie/
   - ./pi-hole/
   - ./plex/
   - ./tautulli/
