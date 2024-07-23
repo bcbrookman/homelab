@@ -83,9 +83,10 @@ tasks:
       - docker rm --force homelab-cicd
 
   docker-test:shell:
+    aliases: [docker-test]
     desc: Exec into CI/CD test container
     deps:
-      - docker-test:start
+      - docker-test:setup
     cmds:
       - docker exec -it homelab-cicd bash
 
@@ -94,6 +95,7 @@ tasks:
   docker-test:run: docker run --name homelab-cicd
                    --detach -it --env-file .env.staging
                    -v ./:/homelab -w /homelab --privileged
+                   -p 8000:8000
                    summerwind/actions-runner-dind:latest bash -c 'sleep infinity'
                    || docker start homelab-cicd
 
