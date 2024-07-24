@@ -1,6 +1,6 @@
 # Infrastructure Layer
 
-This layer provides the hypervisors, bare-metal operating systems, and compute resources used by the platform layer.
+This layer provides the basic networking, storage, and compute resources used by the [Platform Layer](https://bcbrookman.github.io/homelab/platform-layer/). It includes physical hardware, hypervisors, and other infrastructure components.
 
 ![infrastructure layer diagram](assets/homelab-layers-if.svg)
 
@@ -40,7 +40,7 @@ Logically, the network is divided into VLANs by usage.
 
 ![logical network topology diagram](assets/homelab-logical-network-topology.svg)
 
-As illustrated in the logical topology diagram above, traffic to and from each VLAN is polcied by firewalls. In general, the firewall rules restrict access according to the following table.
+As illustrated in the logical topology diagram above, traffic to and from each VLAN is policed by firewalls. In general, the firewall rules restrict access according to the following table.
 
 |Source|Allowed Destinations|
 |------|--------------------|
@@ -66,13 +66,13 @@ The network is designed with redundant network paths wherever possible, but much
 
 ![physical network topology diagram](assets/homelab-physical-network-topology.svg)
 
-The WAN router is only used to allow for redundant pfSense firewalls with only one dynamic public IP address. Outbound traffic is source NATed to the current WAN interface address, and all inbound traffic is destination NATed to the floating WAN CARP virtual address. In many consumer routers, this would be similar to setting the WAN CARP virtual address as the DMZ host.
+The WAN router is only used to allow for redundant [pfSense](https://www.pfsense.org/) firewalls with only one dynamic public IP address. Outbound traffic is source NATed to the current WAN interface address, and all inbound traffic is destination NATed to the floating WAN CARP virtual address. In many consumer routers, this would be similar to setting the WAN CARP virtual address as the DMZ host.
 
 ## WLAN
 
 The WLAN is a straightforward deployment with 2 SSIDs. One SSID uses WPA2-EAP authentication with PEAP-MSCHAPv2 (for now), while the other uses standard WPA2-PSK authentication to support IoT and guest devices.
 
-For both SSIDs, VLANs are dynamically assigned to clients using FreeRADIUS (currently on pfSense) based on either the authenticating user account, or by client MAC address if PSK authentication was used. In the case of PSK authentication, if the client MAC address is unknown, they are placed in the Guest VLAN as a default.
+For both SSIDs, VLANs are dynamically assigned to clients using FreeRADIUS (currently on [pfSense](https://www.pfsense.org/)) based on either the authenticating user account, or by client MAC address if PSK authentication was used. In the case of PSK authentication, if the client MAC address is unknown, they are placed in the Guest VLAN as a default.
 
 ## Power
 
@@ -83,6 +83,6 @@ Power to all equipment is provided by the following two UPSes.
 |1|CyberPower CP1500PFCLCD|1500VA|1000W|
 |1|CyberPower OR700LCDRM1U|700VA|400W|
 
-To help prevent a single UPS failure from becoming a single point of failure, clustered and highly available components are always powered by different UPSes. However, since many clusters (including Proxmox VE and Kubernetes) require an odd number of nodes to maintain quorum, a single UPS failure might still be problematic depending on which UPS fails. Both UPSes are also plugged into the same electrical circuit so a breaker trip or other problem would cause power loss to both UPSes.
+To help prevent a single UPS failure from becoming a single point of failure, clustered and highly available components are always powered by different UPSes. However, since many clusters (including [Proxmox VE](https://www.proxmox.com/en/proxmox-virtual-environment/overview) and [Kubernetes](https://kubernetes.io)) require an odd number of nodes to maintain quorum, a single UPS failure might still be problematic depending on which UPS fails. Both UPSes are also plugged into the same electrical circuit so a breaker trip or other problem would cause power loss to both UPSes.
 
 These problems are currently accepted as compromises for using small form-factor, low-power, consumer hardware which often don't have redundant power supplies or NICs.
